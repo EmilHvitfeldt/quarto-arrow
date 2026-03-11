@@ -119,9 +119,10 @@ local function parse_options(kwargs)
   opts.label_position = get_kwarg(kwargs, "label-position", "middle")  -- start, middle, end
   opts.label_offset = get_kwarg_number(kwargs, "label-offset", 10)
 
-  -- Accessibility (future)
+  -- Accessibility
   opts.aria_label = get_kwarg(kwargs, "aria-label", nil)
-  opts.alt = get_kwarg(kwargs, "alt", nil)
+  opts.alt = get_kwarg(kwargs, "alt", nil)  -- fallback for aria-label
+  opts.title = get_kwarg(kwargs, "title", nil)  -- tooltip/accessible name
   opts.css_class = get_kwarg(kwargs, "class", nil)
 
   return opts
@@ -642,9 +643,17 @@ local function build_svg(opts, bounds, path_d, marker_id, adj_from, adj_to, adj_
 
   -- Accessibility attributes
   local a11y_attrs = {}
-  if opts.aria_label then
-    table.insert(a11y_attrs, string.format('aria-label="%s"', opts.aria_label))
+  local a11y_content = ""
+  local accessible_name = opts.aria_label or opts.alt
+  if accessible_name then
+    table.insert(a11y_attrs, string.format('aria-label="%s"', accessible_name))
     table.insert(a11y_attrs, 'role="img"')
+  end
+  if opts.title then
+    a11y_content = string.format('<title>%s</title>', opts.title)
+    if not accessible_name then
+      table.insert(a11y_attrs, 'role="img"')
+    end
   end
 
   -- CSS class
@@ -688,10 +697,11 @@ local function build_svg(opts, bounds, path_d, marker_id, adj_from, adj_to, adj_
   end
 
   return string.format(
-    '<svg width="%.1f" height="%.1f" viewBox="0 0 %.1f %.1f" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;"%s%s>%s%s%s</svg>',
+    '<svg width="%.1f" height="%.1f" viewBox="0 0 %.1f %.1f" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;"%s%s>%s%s%s%s</svg>',
     svg_width, svg_height, svg_width, svg_height,
     class_attr,
     #a11y_attrs > 0 and (" " .. table.concat(a11y_attrs, " ")) or "",
+    a11y_content,
     defs,
     path_content,
     label_content)
@@ -745,7 +755,20 @@ local function render_html(svg, opts, bounds)
 @keyframes %s-marker-appear {
   to { opacity: 1; }
 }
-</style>]], anim_id, anim_id, anim_id, anim_id, duration, anim_id, anim_id, anim_id, anim_id)
+@media (prefers-reduced-motion: reduce) {
+  .%s-path {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+  .%s-marker {
+    opacity: 1;
+  }
+  .fragment.visible .%s-path,
+  .fragment.visible .%s-marker {
+    animation: none;
+  }
+}
+</style>]], anim_id, anim_id, anim_id, anim_id, duration, anim_id, anim_id, anim_id, anim_id, anim_id, anim_id, anim_id, anim_id)
   end
 
   if is_positioned then

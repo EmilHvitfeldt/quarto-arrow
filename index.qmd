@@ -147,6 +147,9 @@ Arrows work in RevealJS slides for visual presentations.
 | `fragment` | - | RevealJS fragment with draw animation (`"true"`) |
 | `fragment-index` | - | RevealJS fragment order (number) |
 | `fragment-duration` | `0.5` | Draw animation duration in seconds |
+| `aria-label` | - | Screen reader description |
+| `alt` | - | Alternative text (fallback for aria-label) |
+| `title` | - | Tooltip text (visible on hover) |
 
 ### Line Styles
 

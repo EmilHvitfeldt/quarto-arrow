@@ -62,11 +62,11 @@
 - [ ] `class="..."` - add custom CSS classes for external styling
 
 ### Accessibility
-- [ ] `aria-label="..."` - screen reader description
-- [ ] `alt="..."` - alternative text description
-- [ ] `role="img"` - proper ARIA role on SVG
-- [ ] `title="..."` - tooltip/accessible name
-- [ ] Respect `prefers-reduced-motion` for animations
+- [x] `aria-label="..."` - screen reader description
+- [x] `alt="..."` - alternative text description (fallback for aria-label)
+- [x] `role="img"` - proper ARIA role on SVG (auto-added when aria-label/alt/title set)
+- [x] `title="..."` - tooltip/accessible name
+- [x] Respect `prefers-reduced-motion` for animations
 - [ ] High contrast mode support
 
 ### Labels
