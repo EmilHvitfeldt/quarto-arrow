@@ -50,8 +50,8 @@
 **Not planned:** `wavy`, `zigzag`, custom SVG patterns (too complex - requires path transformation)
 
 ### Convenience & Shortcuts
-- [ ] `direction="up|down|left|right"` - auto-calculate curve based on direction
-- [ ] `curve="0.5"` - simple curviness parameter (0=straight, 1=max curve) instead of manual control points
+- [x] `bend="left|right|angle"` - auto-calculate curve direction
+- [x] `curve="0.5"` - simple curviness parameter (0=straight, 1=max curve) instead of manual control points
 - [ ] `style="..."` presets:
   - [ ] `annotation` - subtle, thin, for callouts
   - [ ] `flowchart` - clean, professional
@@ -77,7 +77,7 @@
 ### Advanced Curves
 - [ ] Multiple waypoints for complex paths
 - [ ] Arc segments (circular curves)
-- [ ] Auto-curve based on distance/direction
+- [x] Auto-curve based on distance/direction (`curve` + `bend` parameters)
 
 ### Animation (HTML only)
 - [ ] `animate="true"` - draw animation on load

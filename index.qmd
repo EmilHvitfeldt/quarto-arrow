@@ -75,6 +75,15 @@ Add text labels to arrows with positioning options.
 
 <iframe src="examples/labels.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
+### Advanced Curves
+
+Simple curve parameter instead of manual control points.
+
+[View Example](examples/curves.html){.btn .btn-primary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/curves.qmd){.btn .btn-secondary}
+
+<iframe src="examples/curves.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
+
 ### Positioned Arrows
 
 Absolute and fixed positioning for document-level annotations.
@@ -116,6 +125,8 @@ Arrows work in RevealJS slides for visual presentations.
 | `to` | required | End point `"x,y"` |
 | `control1` | - | First control point for curves |
 | `control2` | - | Second control point (cubic Bezier) |
+| `curve` | - | Curviness 0-1 (alternative to control points) |
+| `bend` | `"left"` | Bend direction: `"left"`, `"right"`, or angle in degrees |
 | `color` | `"black"` | Stroke color |
 | `width` | `2` | Stroke width in pixels |
 | `size` | `10` | Arrowhead size |

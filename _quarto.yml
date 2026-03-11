@@ -8,6 +8,7 @@ project:
     - examples/arrowheads.qmd
     - examples/linestyles.qmd
     - examples/labels.qmd
+    - examples/curves.qmd
     - examples/positioned.qmd
     - examples/revealjs.qmd
     - examples/pdf.qmd
@@ -30,6 +31,8 @@ website:
             text: Line Styles
           - href: examples/labels.qmd
             text: Labels
+          - href: examples/curves.qmd
+            text: Advanced Curves
           - href: examples/positioned.qmd
             text: Positioned Arrows
           - href: examples/revealjs.qmd

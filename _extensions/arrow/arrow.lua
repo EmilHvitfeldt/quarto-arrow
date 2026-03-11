@@ -68,6 +68,10 @@ local function parse_options(kwargs)
   opts.control1 = parse_point(get_kwarg(kwargs, "control1", ""))
   opts.control2 = parse_point(get_kwarg(kwargs, "control2", ""))
 
+  -- Curve shortcuts (alternative to manual control points)
+  opts.curve = get_kwarg_number(kwargs, "curve", nil)  -- 0-1 curviness
+  opts.bend = get_kwarg(kwargs, "bend", nil)  -- "left", "right", or angle in degrees
+
   -- Styling
   opts.color = get_kwarg(kwargs, "color", "black")
   opts.width = get_kwarg_number(kwargs, "width", 2)
@@ -99,6 +103,59 @@ local function parse_options(kwargs)
   opts.css_class = get_kwarg(kwargs, "class", nil)
 
   return opts
+end
+
+--------------------------------------------------------------------------------
+-- Auto Control Point Calculation
+--------------------------------------------------------------------------------
+
+local function calculate_auto_control(opts)
+  -- Skip if control points are already specified or no curve parameter
+  if opts.control1 or not opts.curve then
+    return
+  end
+
+  local from = opts.from
+  local to = opts.to
+  if not from or not to then return end
+
+  -- Calculate midpoint
+  local mid_x = (from.x + to.x) / 2
+  local mid_y = (from.y + to.y) / 2
+
+  -- Calculate line length and angle
+  local dx = to.x - from.x
+  local dy = to.y - from.y
+  local length = math.sqrt(dx * dx + dy * dy)
+  local line_angle = math.atan(dy, dx)
+
+  -- Determine bend direction
+  local bend_angle
+  if opts.bend == "left" then
+    bend_angle = line_angle - math.pi / 2  -- perpendicular left
+  elseif opts.bend == "right" then
+    bend_angle = line_angle + math.pi / 2  -- perpendicular right
+  elseif opts.bend then
+    -- Numeric angle in degrees
+    local degrees = tonumber(opts.bend)
+    if degrees then
+      bend_angle = math.rad(degrees)
+    else
+      bend_angle = line_angle - math.pi / 2  -- default to left
+    end
+  else
+    bend_angle = line_angle - math.pi / 2  -- default to left (above for horizontal)
+  end
+
+  -- Calculate offset distance based on curve parameter and line length
+  local curve_amount = math.max(0, math.min(1, opts.curve))  -- clamp 0-1
+  local offset = curve_amount * length * 0.5
+
+  -- Calculate control point
+  opts.control1 = {
+    x = mid_x + offset * math.cos(bend_angle),
+    y = mid_y + offset * math.sin(bend_angle)
+  }
 end
 
 --------------------------------------------------------------------------------
@@ -577,6 +634,9 @@ function arrow(args, kwargs, meta, raw_args, context)
     quarto.log.error("Arrow shortcode requires 'from' and 'to' coordinates")
     return pandoc.Str("[arrow: missing coordinates]")
   end
+
+  -- Auto-calculate control points if curve/bend specified
+  calculate_auto_control(opts)
 
   -- Calculate bounding box
   local bounds = calculate_bounds(opts)
