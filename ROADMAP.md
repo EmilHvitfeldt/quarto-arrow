@@ -14,6 +14,9 @@
 - [x] Absolute positioning (container-relative)
 - [x] HTML format support
 - [x] Text fallback for other formats
+- [x] Arrowhead placement (`head-start`, `head-end`)
+- [x] Arrowhead styles (`head="arrow|stealth|diamond|circle|square|bar|barbed|none"`)
+- [x] Outline vs filled arrowheads (`head-fill`)
 
 ## Known Issues
 
@@ -23,26 +26,24 @@
 ## Planned Features
 
 ### Arrowhead Options
-- [ ] `start="true"` - arrowhead at start
-- [ ] `end="true"` - arrowhead at end (current default)
-- [ ] `both="true"` - arrowheads at both ends
-- [ ] Arrowhead styles via `head="..."`:
-  - [ ] `none` - no arrowhead
-  - [ ] `arrow` - default filled triangle
-  - [ ] `open` - outline triangle (not filled)
-  - [ ] `stealth` - pointed, angular military-style
-  - [ ] `barbed` - hook-like, fishing arrow style
-  - [ ] `diamond` - diamond/rhombus shape
-  - [ ] `circle` / `dot` - round endpoint
-  - [ ] `square` - square endpoint
-  - [ ] `bar` / `stop` - flat perpendicular line
+- [x] `head-start="true"` - arrowhead at start
+- [x] `head-end="true"` - arrowhead at end (current default)
+- [x] Arrowhead styles via `head="..."`:
+  - [x] `none` - no arrowhead
+  - [x] `arrow` - default filled triangle
+  - [x] `stealth` - pointed, angular military-style
+  - [x] `barbed` - hook-like, fishing arrow style
+  - [x] `diamond` - diamond/rhombus shape
+  - [x] `circle` / `dot` - round endpoint
+  - [x] `square` - square endpoint
+  - [x] `bar` / `stop` - flat perpendicular line
+- [x] `head-fill="true|false"` - filled vs outline for applicable styles
 - [ ] `head-size` - independent arrowhead sizing (not tied to stroke width)
-- [ ] `head-fill="true|false"` - filled vs outline for applicable styles
 
 ### Line Styles
-- [ ] `dash="true"` or `dash="5,3"` - dashed lines
-- [ ] `dot="true"` - dotted lines
-- [ ] `opacity="0.5"` - line transparency
+- [x] `dash="true"` or `dash="5,3"` - dashed lines
+- [x] `opacity="0.5"` - line transparency
+- [ ] `dot="true"` - dotted lines (shorthand for small dash)
 - [ ] Custom patterns via `pattern="..."`:
   - [ ] `wavy` - sine wave pattern
   - [ ] `zigzag` - angular wave pattern

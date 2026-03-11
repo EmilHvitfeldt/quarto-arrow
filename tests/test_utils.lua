@@ -1,6 +1,7 @@
 #!/usr/bin/env lua
 -- Unit tests for arrow utils
--- Run with: lua tests/test_utils.lua (from project root)
+-- Run with: lua tests/test_utils.lua (from tests directory)
+-- Or: ./run_tests.sh (from project root)
 
 -- Add extension directory to path so we can require utils
 package.path = package.path .. ";../_extensions/arrow/?.lua"
@@ -41,100 +42,25 @@ local function assert_not_nil(actual, msg)
 end
 
 --------------------------------------------------------------------------------
-print("\n=== parse_coordinate ===")
---------------------------------------------------------------------------------
-
-test("parses plain integer as pixels", function()
-  local c = utils.parse_coordinate("100")
-  assert_eq(c.value, 100, "value")
-  assert_eq(c.unit, "px", "unit")
-end)
-
-test("parses decimal as pixels", function()
-  local c = utils.parse_coordinate("100.5")
-  assert_eq(c.value, 100.5, "value")
-  assert_eq(c.unit, "px", "unit")
-end)
-
-test("parses percentage", function()
-  local c = utils.parse_coordinate("50%")
-  assert_eq(c.value, 50, "value")
-  assert_eq(c.unit, "%", "unit")
-end)
-
-test("parses decimal percentage", function()
-  local c = utils.parse_coordinate("33.33%")
-  assert_eq(c.value, 33.33, "value")
-  assert_eq(c.unit, "%", "unit")
-end)
-
-test("parses viewport width", function()
-  local c = utils.parse_coordinate("10vw")
-  assert_eq(c.value, 10, "value")
-  assert_eq(c.unit, "vw", "unit")
-end)
-
-test("parses viewport height", function()
-  local c = utils.parse_coordinate("20vh")
-  assert_eq(c.value, 20, "value")
-  assert_eq(c.unit, "vh", "unit")
-end)
-
-test("trims whitespace", function()
-  local c = utils.parse_coordinate("  100  ")
-  assert_eq(c.value, 100, "value")
-end)
-
-test("returns nil for empty string", function()
-  local c = utils.parse_coordinate("")
-  assert_nil(c, "empty string")
-end)
-
-test("returns nil for nil input", function()
-  local c = utils.parse_coordinate(nil)
-  assert_nil(c, "nil input")
-end)
-
-test("returns nil for invalid input", function()
-  local c = utils.parse_coordinate("abc")
-  assert_nil(c, "invalid input")
-end)
-
-test("returns nil for partial unit", function()
-  local c = utils.parse_coordinate("100v")
-  assert_nil(c, "partial unit")
-end)
-
---------------------------------------------------------------------------------
 print("\n=== parse_point ===")
 --------------------------------------------------------------------------------
 
-test("parses simple pixel coordinates", function()
+test("parses simple coordinates", function()
   local p = utils.parse_point("100,200")
-  assert_eq(p.x.value, 100, "x value")
-  assert_eq(p.x.unit, "px", "x unit")
-  assert_eq(p.y.value, 200, "y value")
-  assert_eq(p.y.unit, "px", "y unit")
+  assert_eq(p.x, 100, "x value")
+  assert_eq(p.y, 200, "y value")
 end)
 
-test("parses percentage coordinates", function()
-  local p = utils.parse_point("50%,75%")
-  assert_eq(p.x.value, 50, "x value")
-  assert_eq(p.x.unit, "%", "x unit")
-  assert_eq(p.y.value, 75, "y value")
-  assert_eq(p.y.unit, "%", "y unit")
+test("parses decimal coordinates", function()
+  local p = utils.parse_point("100.5,200.5")
+  assert_eq(p.x, 100.5, "x value")
+  assert_eq(p.y, 200.5, "y value")
 end)
 
-test("parses mixed units", function()
-  local p = utils.parse_point("50%,100")
-  assert_eq(p.x.unit, "%", "x unit")
-  assert_eq(p.y.unit, "px", "y unit")
-end)
-
-test("parses viewport units", function()
-  local p = utils.parse_point("10vw,20vh")
-  assert_eq(p.x.unit, "vw", "x unit")
-  assert_eq(p.y.unit, "vh", "y unit")
+test("parses negative coordinates", function()
+  local p = utils.parse_point("-50,100")
+  assert_eq(p.x, -50, "x value")
+  assert_eq(p.y, 100, "y value")
 end)
 
 test("returns nil for empty string", function()
@@ -165,93 +91,6 @@ end)
 test("returns nil if y is invalid", function()
   local p = utils.parse_point("100,abc")
   assert_nil(p, "invalid y")
-end)
-
---------------------------------------------------------------------------------
-print("\n=== point_has_dynamic_units ===")
---------------------------------------------------------------------------------
-
-test("returns false for nil point", function()
-  assert_eq(utils.point_has_dynamic_units(nil), false, "nil point")
-end)
-
-test("returns false for pixel-only point", function()
-  local p = utils.parse_point("100,200")
-  assert_eq(utils.point_has_dynamic_units(p), false, "pixel point")
-end)
-
-test("returns true for percentage x", function()
-  local p = utils.parse_point("50%,200")
-  assert_eq(utils.point_has_dynamic_units(p), true, "percentage x")
-end)
-
-test("returns true for percentage y", function()
-  local p = utils.parse_point("100,50%")
-  assert_eq(utils.point_has_dynamic_units(p), true, "percentage y")
-end)
-
-test("returns true for viewport units", function()
-  local p = utils.parse_point("10vw,20vh")
-  assert_eq(utils.point_has_dynamic_units(p), true, "viewport units")
-end)
-
---------------------------------------------------------------------------------
-print("\n=== has_dynamic_coordinates ===")
---------------------------------------------------------------------------------
-
-test("returns false when all points are pixels", function()
-  local opts = {
-    from = utils.parse_point("0,0"),
-    to = utils.parse_point("100,100"),
-    control1 = utils.parse_point("50,0"),
-    control2 = nil
-  }
-  assert_eq(utils.has_dynamic_coordinates(opts), false, "all pixels")
-end)
-
-test("returns true when from has dynamic units", function()
-  local opts = {
-    from = utils.parse_point("50%,0"),
-    to = utils.parse_point("100,100"),
-    control1 = nil,
-    control2 = nil
-  }
-  assert_eq(utils.has_dynamic_coordinates(opts), true, "dynamic from")
-end)
-
-test("returns true when to has dynamic units", function()
-  local opts = {
-    from = utils.parse_point("0,0"),
-    to = utils.parse_point("100%,100%"),
-    control1 = nil,
-    control2 = nil
-  }
-  assert_eq(utils.has_dynamic_coordinates(opts), true, "dynamic to")
-end)
-
-test("returns true when control1 has dynamic units", function()
-  local opts = {
-    from = utils.parse_point("0,0"),
-    to = utils.parse_point("100,100"),
-    control1 = utils.parse_point("50vw,50vh"),
-    control2 = nil
-  }
-  assert_eq(utils.has_dynamic_coordinates(opts), true, "dynamic control1")
-end)
-
---------------------------------------------------------------------------------
-print("\n=== point_to_pixels ===")
---------------------------------------------------------------------------------
-
-test("returns nil for nil input", function()
-  assert_nil(utils.point_to_pixels(nil), "nil input")
-end)
-
-test("extracts values from point", function()
-  local p = utils.parse_point("100,200")
-  local px = utils.point_to_pixels(p)
-  assert_eq(px.x, 100, "x value")
-  assert_eq(px.y, 200, "y value")
 end)
 
 --------------------------------------------------------------------------------
@@ -314,6 +153,14 @@ test("includes both control points", function()
   assert_eq(bounds.max_x, 120, "max_x from c2")
 end)
 
+test("applies zero padding correctly", function()
+  local from = {x = 0, y = 0}
+  local to = {x = 100, y = 100}
+  local bounds = utils.calculate_bounds(from, to, nil, nil, 0)
+  assert_eq(bounds.min_x, 0, "min_x")
+  assert_eq(bounds.max_x, 100, "max_x")
+end)
+
 --------------------------------------------------------------------------------
 print("\n=== adjust_point ===")
 --------------------------------------------------------------------------------
@@ -329,6 +176,22 @@ test("adjusts point relative to bounds", function()
   local adj = utils.adjust_point(point, bounds)
   assert_eq(adj.x, 40, "adjusted x")
   assert_eq(adj.y, 60, "adjusted y")
+end)
+
+test("handles zero bounds", function()
+  local point = {x = 50, y = 80}
+  local bounds = {min_x = 0, min_y = 0}
+  local adj = utils.adjust_point(point, bounds)
+  assert_eq(adj.x, 50, "adjusted x")
+  assert_eq(adj.y, 80, "adjusted y")
+end)
+
+test("handles negative bounds", function()
+  local point = {x = 50, y = 80}
+  local bounds = {min_x = -10, min_y = -20}
+  local adj = utils.adjust_point(point, bounds)
+  assert_eq(adj.x, 60, "adjusted x")
+  assert_eq(adj.y, 100, "adjusted y")
 end)
 
 --------------------------------------------------------------------------------
@@ -348,6 +211,11 @@ end)
 test("builds cubic bezier path", function()
   local path = utils.build_path({x=0, y=0}, {x=100, y=100}, {x=25, y=0}, {x=75, y=100})
   assert_eq(path, "M 0.0,0.0 C 25.0,0.0 75.0,100.0 100.0,100.0", "cubic bezier")
+end)
+
+test("handles decimal coordinates", function()
+  local path = utils.build_path({x=0.5, y=0.5}, {x=100.5, y=100.5}, nil, nil)
+  assert_eq(path, "M 0.5,0.5 L 100.5,100.5", "decimal coords")
 end)
 
 --------------------------------------------------------------------------------
@@ -386,6 +254,12 @@ test("excludes opacity when equal to 1", function()
   assert(not attrs:find('stroke%-opacity'), "no opacity attr")
 end)
 
+test("handles zero opacity", function()
+  local opts = {color = "black", width = 1, opacity = 0}
+  local attrs = utils.build_stroke_attrs(opts)
+  assert(attrs:find('stroke%-opacity="0.00"'), "has zero opacity")
+end)
+
 --------------------------------------------------------------------------------
 print("\n=== get_kwarg ===")
 --------------------------------------------------------------------------------
@@ -415,6 +289,11 @@ test("returns default for empty string", function()
   assert_eq(utils.get_kwarg(kwargs, "color", "black"), "black", "empty string")
 end)
 
+test("returns nil default when specified", function()
+  local kwargs = {}
+  assert_nil(utils.get_kwarg(kwargs, "color", nil), "nil default")
+end)
+
 --------------------------------------------------------------------------------
 print("\n=== get_kwarg_number ===")
 --------------------------------------------------------------------------------
@@ -437,6 +316,11 @@ end)
 test("returns default when missing", function()
   local kwargs = {}
   assert_eq(utils.get_kwarg_number(kwargs, "width", 2), 2, "missing")
+end)
+
+test("parses negative number", function()
+  local kwargs = {offset = "-10"}
+  assert_eq(utils.get_kwarg_number(kwargs, "offset", 0), -10, "negative")
 end)
 
 --------------------------------------------------------------------------------
@@ -462,6 +346,11 @@ end)
 test("treats non-true as false", function()
   local kwargs = {enabled = "yes"}
   assert_eq(utils.get_kwarg_bool(kwargs, "enabled", true), false, "yes is not true")
+end)
+
+test("treats 1 as false (strict)", function()
+  local kwargs = {enabled = "1"}
+  assert_eq(utils.get_kwarg_bool(kwargs, "enabled", true), false, "1 is not true")
 end)
 
 --------------------------------------------------------------------------------

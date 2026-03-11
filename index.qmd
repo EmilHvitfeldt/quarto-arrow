@@ -48,6 +48,15 @@ Colors, stroke widths, dash patterns, and arrowhead sizes.
 
 <iframe src="examples/styling.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
+### Arrowhead Styles
+
+Multiple arrowhead styles: arrow, stealth, diamond, circle, square, bar, barbed, and none.
+
+[View Example](examples/arrowheads.html){.btn .btn-primary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/arrowheads.qmd){.btn .btn-secondary}
+
+<iframe src="examples/arrowheads.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
+
 ### Positioned Arrows
 
 Absolute and fixed positioning for document-level annotations.
@@ -95,6 +104,24 @@ Arrows work in RevealJS slides for visual presentations.
 | `dash` | - | Dash pattern (e.g., `"5,5"` or `"true"`) |
 | `opacity` | `1` | Stroke opacity (0-1) |
 | `position` | - | `"absolute"` or `"fixed"` |
+| `head` | `"arrow"` | Arrowhead style (see below) |
+| `head-start` | `false` | Show arrowhead at start |
+| `head-end` | `true` | Show arrowhead at end |
+| `head-fill` | `true` | Filled (`true`) or outline (`false`) |
+
+### Arrowhead Styles
+
+| Style | Description |
+|-------|-------------|
+| `arrow` | Default filled triangle |
+| `stealth` | Pointed, angular military-style |
+| `diamond` | Diamond/rhombus shape |
+| `circle` | Round endpoint |
+| `dot` | Alias for circle |
+| `square` | Square endpoint |
+| `bar` | Flat perpendicular line |
+| `barbed` | Hook-like, open arrow |
+| `none` | No arrowhead |
 
 ### Positioning Modes
 

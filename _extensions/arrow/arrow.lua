@@ -77,10 +77,11 @@ local function parse_options(kwargs)
   opts.dash = get_kwarg(kwargs, "dash", nil)
   opts.opacity = get_kwarg_number(kwargs, "opacity", 1)
 
-  -- Arrowhead options (future: multiple styles)
+  -- Arrowhead options
   opts.head = get_kwarg(kwargs, "head", "arrow")
   opts.head_start = get_kwarg_bool(kwargs, "head-start", false)
   opts.head_end = get_kwarg_bool(kwargs, "head-end", true)
+  opts.head_fill = get_kwarg_bool(kwargs, "head-fill", true)
 
   -- Positioning
   opts.position = get_kwarg(kwargs, "position", nil)
@@ -157,35 +158,135 @@ end
 -- SVG Marker (Arrowhead) Generation
 --------------------------------------------------------------------------------
 
--- Arrowhead path definitions by style
-local MARKER_PATHS = {
+-- Arrowhead style definitions
+-- Each returns: {path = "...", refX = n, refY = n, width = n, height = n, is_stroke = bool}
+local MARKER_STYLES = {
   arrow = function(size)
-    -- Default filled triangle
-    return string.format("M 0 0 L %s %s L 0 %s z", size, size/2, size)
+    -- Default filled triangle pointing right
+    return {
+      path = string.format("M 0 0 L %s %s L 0 %s z", size, size/2, size),
+      refX = size,
+      refY = size/2,
+      width = size,
+      height = size,
+      is_stroke = false
+    }
   end,
-  -- Future styles will be added here:
-  -- open = function(size) ... end,
-  -- stealth = function(size) ... end,
-  -- diamond = function(size) ... end,
-  -- circle = function(size) ... end,
-  -- bar = function(size) ... end,
+
+  stealth = function(size)
+    -- Pointed, angular military-style arrow
+    local w = size * 1.2
+    local h = size
+    return {
+      path = string.format("M 0 0 L %s %s L 0 %s L %s %s z", w, h/2, h, w*0.3, h/2),
+      refX = w,
+      refY = h/2,
+      width = w,
+      height = h,
+      is_stroke = false
+    }
+  end,
+
+  diamond = function(size)
+    -- Diamond/rhombus shape
+    local w = size
+    local h = size
+    return {
+      path = string.format("M 0 %s L %s 0 L %s %s L %s %s z", h/2, w/2, w, h/2, w/2, h),
+      refX = w,
+      refY = h/2,
+      width = w,
+      height = h,
+      is_stroke = false
+    }
+  end,
+
+  circle = function(size)
+    -- Round endpoint (circle)
+    local r = size / 2
+    return {
+      path = string.format("M %s %s m -%s 0 a %s %s 0 1 0 %s 0 a %s %s 0 1 0 -%s 0",
+        r, r, r, r, r, r*2, r, r, r*2),
+      refX = size,
+      refY = r,
+      width = size,
+      height = size,
+      is_stroke = false
+    }
+  end,
+
+
+  square = function(size)
+    -- Square endpoint
+    return {
+      path = string.format("M 0 0 L %s 0 L %s %s L 0 %s z", size, size, size, size),
+      refX = size,
+      refY = size/2,
+      width = size,
+      height = size,
+      is_stroke = false
+    }
+  end,
+
+  bar = function(size)
+    -- Flat perpendicular line (stop)
+    local w = size / 3
+    local h = size
+    return {
+      path = string.format("M 0 0 L %s 0 L %s %s L 0 %s z", w, w, h, h),
+      refX = w,
+      refY = h/2,
+      width = w,
+      height = h,
+      is_stroke = false
+    }
+  end,
+
+  barbed = function(size)
+    -- Hook-like, fishing arrow style (open, no fill)
+    local w = size
+    local h = size
+    return {
+      path = string.format("M 0 0 L %s %s L 0 %s", w, h/2, h),
+      refX = w,
+      refY = h/2,
+      width = w,
+      height = h,
+      is_stroke = true
+    }
+  end,
 }
 
 local function build_marker(id, opts)
   local size = opts.size
   local color = opts.color
   local style = opts.head
+  local fill = opts.head_fill
 
-  -- Get path generator for style, default to arrow
-  local path_fn = MARKER_PATHS[style] or MARKER_PATHS.arrow
-  local path_d = path_fn(size)
+  -- Handle aliases
+  if style == "dot" then style = "circle" end
+  if style == "stop" then style = "bar" end
+
+  -- Get style generator, default to arrow
+  local style_fn = MARKER_STYLES[style] or MARKER_STYLES.arrow
+  local marker = style_fn(size)
+
+  -- Determine fill and stroke based on style and head-fill option
+  local path_attrs
+  if marker.is_stroke or not fill then
+    -- Stroke-based marker (outline)
+    path_attrs = string.format('fill="none" stroke="%s" stroke-width="1.5"', color)
+  else
+    -- Fill-based marker (solid)
+    path_attrs = string.format('fill="%s"', color)
+  end
 
   return string.format(
     '<marker id="%s" markerWidth="%s" markerHeight="%s" refX="%s" refY="%s" orient="auto-start-reverse" markerUnits="strokeWidth">' ..
-    '<path d="%s" fill="%s"/>' ..
+    '<path d="%s" %s/>' ..
     '</marker>',
-    id, size, size, size, size/2,
-    path_d, color)
+    id, marker.width, marker.height, marker.refX, marker.refY,
+    marker.path, path_attrs)
 end
 
 --------------------------------------------------------------------------------
@@ -224,9 +325,10 @@ local function build_svg(opts, bounds, path_d, marker_id)
   local svg_width = bounds.max_x - bounds.min_x
   local svg_height = bounds.max_y - bounds.min_y
 
-  -- Build marker(s)
+  -- Build marker(s) - skip if head="none"
   local markers = {}
-  if opts.head_end or opts.head_start then
+  local has_markers = (opts.head_end or opts.head_start) and opts.head ~= "none"
+  if has_markers then
     table.insert(markers, build_marker(marker_id, opts))
   end
 
@@ -238,11 +340,13 @@ local function build_svg(opts, bounds, path_d, marker_id)
 
   -- Build marker references
   local marker_attrs = {}
-  if opts.head_end then
-    table.insert(marker_attrs, string.format('marker-end="url(#%s)"', marker_id))
-  end
-  if opts.head_start then
-    table.insert(marker_attrs, string.format('marker-start="url(#%s)"', marker_id))
+  if has_markers then
+    if opts.head_end then
+      table.insert(marker_attrs, string.format('marker-end="url(#%s)"', marker_id))
+    end
+    if opts.head_start then
+      table.insert(marker_attrs, string.format('marker-start="url(#%s)"', marker_id))
+    end
   end
 
   -- Build stroke attributes
