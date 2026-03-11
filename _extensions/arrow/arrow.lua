@@ -35,6 +35,19 @@ local function parse_point(str)
   return {x = nx, y = ny}
 end
 
+local function parse_waypoints(str)
+  if not str or str == "" then return nil end
+  local points = {}
+  for point_str in str:gmatch("[^;]+") do
+    local point = parse_point(point_str:match("^%s*(.-)%s*$"))  -- trim whitespace
+    if point then
+      table.insert(points, point)
+    end
+  end
+  if #points == 0 then return nil end
+  return points
+end
+
 local function generate_id(prefix)
   return (prefix or "arrow") .. "-" .. tostring(math.random(100000, 999999))
 end
@@ -67,6 +80,10 @@ local function parse_options(kwargs)
   opts.to = parse_point(get_kwarg(kwargs, "to", ""))
   opts.control1 = parse_point(get_kwarg(kwargs, "control1", ""))
   opts.control2 = parse_point(get_kwarg(kwargs, "control2", ""))
+
+  -- Multiple waypoints for complex paths
+  opts.waypoints = parse_waypoints(get_kwarg(kwargs, "waypoints", ""))
+  opts.smooth = get_kwarg_bool(kwargs, "smooth", true)  -- smooth curves through waypoints
 
   -- Curve shortcuts (alternative to manual control points)
   opts.curve = get_kwarg_number(kwargs, "curve", nil)  -- 0-1 curviness
@@ -177,6 +194,14 @@ local function calculate_bounds(opts)
     table.insert(all_y, opts.control2.y)
   end
 
+  -- Include waypoints in bounds calculation
+  if opts.waypoints then
+    for _, wp in ipairs(opts.waypoints) do
+      table.insert(all_x, wp.x)
+      table.insert(all_y, wp.y)
+    end
+  end
+
   return {
     min_x = arr_min(all_x) - padding,
     max_x = arr_max(all_x) + padding,
@@ -217,6 +242,61 @@ local function build_path(adj_from, adj_to, adj_c1, adj_c2)
       adj_from.x, adj_from.y,
       adj_to.x, adj_to.y)
   end
+end
+
+-- Build path through multiple waypoints
+-- Uses Catmull-Rom spline conversion to cubic Bezier for smooth curves
+local function build_waypoint_path(points, smooth)
+  if #points < 2 then return "" end
+
+  local path_parts = {}
+  table.insert(path_parts, string.format("M %.1f,%.1f", points[1].x, points[1].y))
+
+  if not smooth or #points == 2 then
+    -- Straight line segments
+    for i = 2, #points do
+      table.insert(path_parts, string.format("L %.1f,%.1f", points[i].x, points[i].y))
+    end
+  else
+    -- Catmull-Rom to Bezier conversion for smooth curves
+    -- Add phantom points at start and end for proper curve at endpoints
+    local extended = {}
+    -- Reflect first point
+    table.insert(extended, {
+      x = 2 * points[1].x - points[2].x,
+      y = 2 * points[1].y - points[2].y
+    })
+    for _, p in ipairs(points) do
+      table.insert(extended, p)
+    end
+    -- Reflect last point
+    table.insert(extended, {
+      x = 2 * points[#points].x - points[#points - 1].x,
+      y = 2 * points[#points].y - points[#points - 1].y
+    })
+
+    -- Convert each segment to cubic Bezier
+    -- Catmull-Rom uses points p0, p1, p2, p3 to define curve from p1 to p2
+    for i = 1, #extended - 3 do
+      local p0, p1, p2, p3 = extended[i], extended[i + 1], extended[i + 2], extended[i + 3]
+
+      -- Catmull-Rom to Bezier control points (tension = 0.5)
+      local t = 0.5
+      local c1 = {
+        x = p1.x + (p2.x - p0.x) / 6 * t * 3,
+        y = p1.y + (p2.y - p0.y) / 6 * t * 3
+      }
+      local c2 = {
+        x = p2.x - (p3.x - p1.x) / 6 * t * 3,
+        y = p2.y - (p3.y - p1.y) / 6 * t * 3
+      }
+
+      table.insert(path_parts, string.format("C %.1f,%.1f %.1f,%.1f %.1f,%.1f",
+        c1.x, c1.y, c2.x, c2.y, p2.x, p2.y))
+    end
+  end
+
+  return table.concat(path_parts, " ")
 end
 
 --------------------------------------------------------------------------------
@@ -635,8 +715,10 @@ function arrow(args, kwargs, meta, raw_args, context)
     return pandoc.Str("[arrow: missing coordinates]")
   end
 
-  -- Auto-calculate control points if curve/bend specified
-  calculate_auto_control(opts)
+  -- Auto-calculate control points if curve/bend specified (only if no waypoints)
+  if not opts.waypoints then
+    calculate_auto_control(opts)
+  end
 
   -- Calculate bounding box
   local bounds = calculate_bounds(opts)
@@ -647,8 +729,28 @@ function arrow(args, kwargs, meta, raw_args, context)
   local adj_c1 = adjust_point(opts.control1, bounds)
   local adj_c2 = adjust_point(opts.control2, bounds)
 
+  -- Adjust waypoints
+  local adj_waypoints = nil
+  if opts.waypoints then
+    adj_waypoints = {}
+    for _, wp in ipairs(opts.waypoints) do
+      table.insert(adj_waypoints, adjust_point(wp, bounds))
+    end
+  end
+
   -- Build SVG path
-  local path_d = build_path(adj_from, adj_to, adj_c1, adj_c2)
+  local path_d
+  if adj_waypoints and #adj_waypoints > 0 then
+    -- Build path through waypoints
+    local all_points = {adj_from}
+    for _, wp in ipairs(adj_waypoints) do
+      table.insert(all_points, wp)
+    end
+    table.insert(all_points, adj_to)
+    path_d = build_waypoint_path(all_points, opts.smooth)
+  else
+    path_d = build_path(adj_from, adj_to, adj_c1, adj_c2)
+  end
 
   -- Generate unique marker ID
   local marker_id = generate_id("arrow")

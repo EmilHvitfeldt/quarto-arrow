@@ -184,3 +184,63 @@ Compare manual control points with the simplified `curve` parameter.
 ```
 
 {{< arrow from="50,80" to="250,80" curve="0.6" bend="left" color="teal" >}}
+
+## Multiple Waypoints
+
+Use `waypoints` to create complex paths through multiple points.
+
+### Basic Waypoints (smooth)
+
+```markdown
+{{</* arrow from="30,50" to="270,50" waypoints="100,20; 150,80; 200,20" */>}}
+```
+
+{{< arrow from="30,50" to="270,50" waypoints="100,20; 150,80; 200,20" >}}
+
+### Zigzag Path (smooth=false)
+
+```markdown
+{{</* arrow from="30,50" to="270,50" waypoints="100,20; 150,80; 200,20" smooth="false" */>}}
+```
+
+{{< arrow from="30,50" to="270,50" waypoints="100,20; 150,80; 200,20" smooth="false" >}}
+
+### Complex Path
+
+```markdown
+{{</* arrow from="30,80" to="270,80" waypoints="80,30; 120,100; 180,30; 220,100" color="purple" */>}}
+```
+
+{{< arrow from="30,80" to="270,80" waypoints="80,30; 120,100; 180,30; 220,100" color="purple" >}}
+
+### Staircase Pattern
+
+```markdown
+{{</* arrow from="30,100" to="270,20" waypoints="80,100; 80,60; 150,60; 150,20; 220,20" smooth="false" color="steelblue" */>}}
+```
+
+{{< arrow from="30,100" to="270,20" waypoints="80,100; 80,60; 150,60; 150,20; 220,20" smooth="false" color="steelblue" >}}
+
+### Smooth Staircase
+
+```markdown
+{{</* arrow from="30,100" to="270,20" waypoints="80,100; 80,60; 150,60; 150,20; 220,20" color="teal" */>}}
+```
+
+{{< arrow from="30,100" to="270,20" waypoints="80,100; 80,60; 150,60; 150,20; 220,20" color="teal" >}}
+
+### Loop Around
+
+```markdown
+{{</* arrow from="30,60" to="270,60" waypoints="80,20; 180,20; 180,100; 80,100; 80,60" color="crimson" head="stealth" */>}}
+```
+
+{{< arrow from="30,60" to="270,60" waypoints="80,20; 180,20; 180,100; 80,100; 80,60" color="crimson" head="stealth" >}}
+
+### Many Waypoints
+
+```markdown
+{{</* arrow from="20,50" to="280,50" waypoints="60,30; 100,70; 140,30; 180,70; 220,30" color="orange" width="3" */>}}
+```
+
+{{< arrow from="20,50" to="280,50" waypoints="60,30; 100,70; 140,30; 180,70; 220,30" color="orange" width="3" >}}

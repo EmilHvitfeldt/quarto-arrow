@@ -75,7 +75,7 @@
 - [x] `label-offset="10"` - distance from line
 
 ### Advanced Curves
-- [ ] Multiple waypoints for complex paths
+- [x] Multiple waypoints for complex paths (`waypoints` parameter with Catmull-Rom smoothing)
 - [ ] Arc segments (circular curves)
 - [x] Auto-curve based on distance/direction (`curve` + `bend` parameters)
 

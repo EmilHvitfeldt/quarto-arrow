@@ -127,6 +127,8 @@ Arrows work in RevealJS slides for visual presentations.
 | `control2` | - | Second control point (cubic Bezier) |
 | `curve` | - | Curviness 0-1 (alternative to control points) |
 | `bend` | `"left"` | Bend direction: `"left"`, `"right"`, or angle in degrees |
+| `waypoints` | - | Intermediate points: `"x1,y1; x2,y2; ..."` |
+| `smooth` | `true` | Smooth curves through waypoints (vs straight segments) |
 | `color` | `"black"` | Stroke color |
 | `width` | `2` | Stroke width in pixels |
 | `size` | `10` | Arrowhead size |
