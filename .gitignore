@@ -1,8 +1,9 @@
 # Generated files
-_site/
 *_files/
-*.html
 *.pdf
+
+# Keep docs/ for GitHub Pages
+!docs/
 
 # Editor/tool files
 .claude/settings.local.json

@@ -1,0 +1,471 @@
+[
+  {
+    "objectID": "examples/positioned.html",
+    "href": "examples/positioned.html",
+    "title": "Positioned Arrows",
+    "section": "",
+    "text": "Use position=\"absolute\" to place arrows at specific document coordinates. The arrow scrolls with the page.\n{{&lt; arrow from=\"750,80\" to=\"950,20\" control1=\"900,100\" color=\"hotpink\" width=\"3\" position=\"absolute\" &gt;}}\n\nLook at the top-right corner of this page to see a hotpink arrow!"
+  },
+  {
+    "objectID": "examples/positioned.html#absolute-positioning",
+    "href": "examples/positioned.html#absolute-positioning",
+    "title": "Positioned Arrows",
+    "section": "",
+    "text": "Use position=\"absolute\" to place arrows at specific document coordinates. The arrow scrolls with the page.\n{{&lt; arrow from=\"750,80\" to=\"950,20\" control1=\"900,100\" color=\"hotpink\" width=\"3\" position=\"absolute\" &gt;}}\n\nLook at the top-right corner of this page to see a hotpink arrow!"
+  },
+  {
+    "objectID": "examples/positioned.html#scoped-positioning",
+    "href": "examples/positioned.html#scoped-positioning",
+    "title": "Positioned Arrows",
+    "section": "Scoped Positioning",
+    "text": "Scoped Positioning\nUse a position: relative container to scope absolute arrows.\n::: {style=\"position: relative; height: 200px;\"}\nContent here...\n{{&lt; arrow from=\"50,50\" to=\"300,150\" control1=\"175,20\" color=\"purple\" position=\"absolute\" &gt;}}\n:::\n\nThis box has position: relative, so the arrow is positioned within it."
+  },
+  {
+    "objectID": "examples/positioned.html#multiple-positioned-arrows",
+    "href": "examples/positioned.html#multiple-positioned-arrows",
+    "title": "Positioned Arrows",
+    "section": "Multiple Positioned Arrows",
+    "text": "Multiple Positioned Arrows\n{{&lt; arrow from=\"30,40\" to=\"150,40\" color=\"red\" position=\"absolute\" &gt;}}\n{{&lt; arrow from=\"30,80\" to=\"200,120\" control1=\"115,40\" color=\"blue\" position=\"absolute\" &gt;}}\n{{&lt; arrow from=\"30,120\" to=\"250,180\" control1=\"80,200\" control2=\"200,100\" color=\"green\" position=\"absolute\" &gt;}}\n\nCombine multiple arrows for complex annotations."
+  },
+  {
+    "objectID": "examples/positioned.html#annotations-example",
+    "href": "examples/positioned.html#annotations-example",
+    "title": "Positioned Arrows",
+    "section": "Annotations Example",
+    "text": "Annotations Example\n{{&lt; arrow from=\"400,30\" to=\"280,50\" control1=\"350,20\" color=\"crimson\" width=\"2\" position=\"absolute\" &gt;}}\n{{&lt; arrow from=\"400,80\" to=\"180,95\" control1=\"300,120\" color=\"steelblue\" width=\"2\" position=\"absolute\" &gt;}}\n\nImportant Concept\nThis is some text that we want to annotate with arrows pointing to key parts."
+  },
+  {
+    "objectID": "examples/positioned.html#fixed-positioning-demo",
+    "href": "examples/positioned.html#fixed-positioning-demo",
+    "title": "Positioned Arrows",
+    "section": "Fixed Positioning (Demo)",
+    "text": "Fixed Positioning (Demo)\nFixed positioning keeps the arrow in place while scrolling. Uncomment to test:\n{{&lt; arrow from=\"50,50\" to=\"150,100\" color=\"orange\" position=\"fixed\" &gt;}}\nNote: Fixed arrows stay visible as you scroll, which can be useful for persistent callouts but may also be distracting."
+  },
+  {
+    "objectID": "examples/arrowheads.html",
+    "href": "examples/arrowheads.html",
+    "title": "Arrowhead Styles",
+    "section": "",
+    "text": "The default head=\"arrow\" style is a filled triangle.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" &gt;}}"
+  },
+  {
+    "objectID": "examples/arrowheads.html#default-arrow",
+    "href": "examples/arrowheads.html#default-arrow",
+    "title": "Arrowhead Styles",
+    "section": "",
+    "text": "The default head=\"arrow\" style is a filled triangle.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" &gt;}}"
+  },
+  {
+    "objectID": "examples/arrowheads.html#arrowhead-styles",
+    "href": "examples/arrowheads.html#arrowhead-styles",
+    "title": "Arrowhead Styles",
+    "section": "Arrowhead Styles",
+    "text": "Arrowhead Styles\n\nArrow (default)\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"arrow\" &gt;}}\n\n\n\nStealth\nMilitary-style pointed arrowhead.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"stealth\" &gt;}}\n\n\n\nDiamond\nDiamond/rhombus shape.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"diamond\" &gt;}}\n\n\n\nCircle / Dot\nRound endpoint.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"circle\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"dot\" &gt;}}\n\n\n\nSquare\nSquare endpoint.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"square\" &gt;}}\n\n\n\nBar / Stop\nFlat perpendicular line.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"bar\" &gt;}}\n\n\n\nBarbed\nHook-like, open arrow style.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"barbed\" &gt;}}\n\n\n\nNone\nNo arrowhead at all.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"none\" &gt;}}"
+  },
+  {
+    "objectID": "examples/arrowheads.html#arrowhead-placement",
+    "href": "examples/arrowheads.html#arrowhead-placement",
+    "title": "Arrowhead Styles",
+    "section": "Arrowhead Placement",
+    "text": "Arrowhead Placement\n\nEnd Only (default)\n{{&lt; arrow from=\"50,30\" to=\"250,30\" &gt;}}\n\n\n\nStart Only\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head-start=\"true\" head-end=\"false\" &gt;}}\n\n\n\nBoth Ends\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head-start=\"true\" head-end=\"true\" &gt;}}\n\n\n\nNeither End\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head-start=\"false\" head-end=\"false\" &gt;}}"
+  },
+  {
+    "objectID": "examples/arrowheads.html#outline-vs-filled",
+    "href": "examples/arrowheads.html#outline-vs-filled",
+    "title": "Arrowhead Styles",
+    "section": "Outline vs Filled",
+    "text": "Outline vs Filled\nUse head-fill=\"false\" for outline arrowheads.\n\nFilled (default)\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"arrow\" head-fill=\"true\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"diamond\" head-fill=\"true\" &gt;}}\n\n\n\nOutline\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"arrow\" head-fill=\"false\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"diamond\" head-fill=\"false\" &gt;}}"
+  },
+  {
+    "objectID": "examples/arrowheads.html#combined-with-curves",
+    "href": "examples/arrowheads.html#combined-with-curves",
+    "title": "Arrowhead Styles",
+    "section": "Combined with Curves",
+    "text": "Combined with Curves\nArrowhead styles work with all curve types.\n\nStealth with Quadratic Curve\n{{&lt; arrow from=\"50,50\" to=\"250,50\" control1=\"150,0\" head=\"stealth\" color=\"purple\" &gt;}}\n\n\n\nDiamond with Cubic Curve\n{{&lt; arrow from=\"50,30\" to=\"250,100\" control1=\"100,0\" control2=\"200,130\" head=\"diamond\" color=\"teal\" &gt;}}\n\n\n\nBoth Ends with S-Curve\n{{&lt; arrow from=\"50,30\" to=\"250,100\" control1=\"100,0\" control2=\"200,130\" head=\"stealth\" head-start=\"true\" color=\"crimson\" &gt;}}"
+  },
+  {
+    "objectID": "examples/basic.html",
+    "href": "examples/basic.html",
+    "title": "Basic Arrows",
+    "section": "",
+    "text": "The simplest arrow is a straight line from one point to another.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" &gt;}}"
+  },
+  {
+    "objectID": "examples/basic.html#straight-lines",
+    "href": "examples/basic.html#straight-lines",
+    "title": "Basic Arrows",
+    "section": "",
+    "text": "The simplest arrow is a straight line from one point to another.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" &gt;}}"
+  },
+  {
+    "objectID": "examples/basic.html#quadratic-bezier-curves",
+    "href": "examples/basic.html#quadratic-bezier-curves",
+    "title": "Basic Arrows",
+    "section": "Quadratic Bezier Curves",
+    "text": "Quadratic Bezier Curves\nAdd one control point to create a smooth curve.\n\nCurve Upward\n{{&lt; arrow from=\"50,80\" to=\"250,80\" control1=\"150,20\" &gt;}}\n\n\n\nCurve Downward\n{{&lt; arrow from=\"50,30\" to=\"250,30\" control1=\"150,100\" &gt;}}\n\n\n\nCurve Left\n{{&lt; arrow from=\"50,50\" to=\"250,50\" control1=\"50,120\" &gt;}}\n\n\n\nCurve Right\n{{&lt; arrow from=\"50,50\" to=\"250,50\" control1=\"250,120\" &gt;}}"
+  },
+  {
+    "objectID": "examples/basic.html#cubic-bezier-curves",
+    "href": "examples/basic.html#cubic-bezier-curves",
+    "title": "Basic Arrows",
+    "section": "Cubic Bezier Curves",
+    "text": "Cubic Bezier Curves\nAdd two control points for S-curves and more complex shapes.\n\nS-Curve\n{{&lt; arrow from=\"50,30\" to=\"250,130\" control1=\"150,0\" control2=\"150,160\" &gt;}}\n\n\n\nReverse S-Curve\n{{&lt; arrow from=\"50,130\" to=\"250,30\" control1=\"150,160\" control2=\"150,0\" &gt;}}\n\n\n\nWave\n{{&lt; arrow from=\"50,80\" to=\"300,80\" control1=\"100,20\" control2=\"250,140\" &gt;}}"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "quarto-arrow",
+    "section": "",
+    "text": "A Quarto extension for drawing arrows with Bezier curves. Perfect for annotations, callouts, and visual explanations."
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "quarto-arrow",
+    "section": "Installation",
+    "text": "Installation\nquarto add emilhvitfeldt/quarto-arrow"
+  },
+  {
+    "objectID": "index.html#quick-start",
+    "href": "index.html#quick-start",
+    "title": "quarto-arrow",
+    "section": "Quick Start",
+    "text": "Quick Start\nAdd the filter to your YAML header:\n---\ntitle: My Document\nformat: html\nfilters:\n  - arrow\n---\nThen use the shortcode:\n{{&lt; arrow from=\"50,50\" to=\"200,100\" &gt;}}"
+  },
+  {
+    "objectID": "index.html#examples",
+    "href": "index.html#examples",
+    "title": "quarto-arrow",
+    "section": "Examples",
+    "text": "Examples\n\nBasic Arrows\nStraight lines, quadratic curves, and cubic Bezier curves.\nView Example Source Code\n\n\n\n\nStyling Options\nColors, stroke widths, dash patterns, and arrowhead sizes.\nView Example Source Code\n\n\n\n\nArrowhead Styles\nMultiple arrowhead styles: arrow, stealth, diamond, circle, square, bar, barbed, and none.\nView Example Source Code\n\n\n\n\nLine Styles\nDotted, double, and triple line patterns.\nView Example Source Code\n\n\n\n\nLabels\nAdd text labels to arrows with positioning options.\nView Example Source Code\n\n\n\n\nAdvanced Curves\nSimple curve parameter instead of manual control points.\nView Example Source Code\n\n\n\n\nPositioned Arrows\nAbsolute and fixed positioning for document-level annotations.\nView Example Source Code\n\n\n\n\nRevealJS Presentations\nArrows work in RevealJS slides with draw animations that reveal arrows step-by-step.\nView Example Source Code"
+  },
+  {
+    "objectID": "index.html#syntax-reference",
+    "href": "index.html#syntax-reference",
+    "title": "quarto-arrow",
+    "section": "Syntax Reference",
+    "text": "Syntax Reference\n\nBasic Usage\n{{&lt; arrow from=\"x1,y1\" to=\"x2,y2\" &gt;}}\n\n\nWith Control Points\n{{&lt; arrow from=\"50,50\" to=\"200,100\" control1=\"125,0\" &gt;}}\n{{&lt; arrow from=\"50,50\" to=\"200,100\" control1=\"100,0\" control2=\"150,150\" &gt;}}\n\n\nStyling Parameters\n\n\n\n\n\n\n\n\nParameter\nDefault\nDescription\n\n\n\n\nfrom\nrequired\nStart point \"x,y\"\n\n\nto\nrequired\nEnd point \"x,y\"\n\n\ncontrol1\n-\nFirst control point for curves\n\n\ncontrol2\n-\nSecond control point (cubic Bezier)\n\n\ncurve\n-\nCurviness 0-1 (alternative to control points)\n\n\nbend\n\"left\"\nBend direction: \"left\", \"right\", or angle in degrees\n\n\nwaypoints\n-\nIntermediate points: \"x1,y1; x2,y2; ...\"\n\n\nsmooth\ntrue\nSmooth curves through waypoints (vs straight segments)\n\n\ncolor\n\"black\"\nStroke color\n\n\nwidth\n2\nStroke width in pixels\n\n\nsize\n10\nArrowhead size\n\n\ndash\n-\nDash pattern (e.g., \"5,5\" or \"true\")\n\n\nline\n\"single\"\nLine style (see below)\n\n\nopacity\n1\nStroke opacity (0-1)\n\n\nposition\n-\n\"absolute\" or \"fixed\"\n\n\nhead\n\"arrow\"\nArrowhead style (see below)\n\n\nhead-start\nfalse\nShow arrowhead at start\n\n\nhead-end\ntrue\nShow arrowhead at end\n\n\nhead-fill\ntrue\nFilled (true) or outline (false)\n\n\nhead-size\nsize\nIndependent arrowhead size (overrides size)\n\n\nlabel\n-\nText label for the arrow\n\n\nlabel-position\n\"middle\"\nLabel position: \"start\", \"middle\", or \"end\"\n\n\nlabel-offset\n10\nDistance from the line (perpendicular)\n\n\nfragment\n-\nRevealJS fragment with draw animation (\"true\")\n\n\nfragment-index\n-\nRevealJS fragment order (number)\n\n\nfragment-duration\n0.5\nDraw animation duration in seconds\n\n\naria-label\n-\nScreen reader description\n\n\nalt\n-\nAlternative text (fallback for aria-label)\n\n\ntitle\n-\nTooltip text (visible on hover)\n\n\n\n\n\nLine Styles\n\n\n\nStyle\nDescription\n\n\n\n\nsingle\nDefault single line\n\n\ndot\nDotted line pattern\n\n\ndouble\nParallel double line\n\n\ntriple\nThree parallel lines\n\n\n\n\n\nArrowhead Styles\n\n\n\nStyle\nDescription\n\n\n\n\narrow\nDefault filled triangle\n\n\nstealth\nPointed, angular military-style\n\n\ndiamond\nDiamond/rhombus shape\n\n\ncircle\nRound endpoint\n\n\ndot\nAlias for circle\n\n\nsquare\nSquare endpoint\n\n\nbar\nFlat perpendicular line\n\n\nbarbed\nHook-like, open arrow\n\n\nnone\nNo arrowhead\n\n\n\n\n\nPositioning Modes\nInline (default): Arrow renders in document flow.\n{{&lt; arrow from=\"50,50\" to=\"200,100\" &gt;}}\nAbsolute: Positioned relative to document body, scrolls with page.\n{{&lt; arrow from=\"600,80\" to=\"780,15\" position=\"absolute\" &gt;}}\nFixed: Positioned relative to viewport, stays in place while scrolling.\n{{&lt; arrow from=\"100,100\" to=\"300,50\" position=\"fixed\" &gt;}}\nScoped Absolute: Use inside a position: relative container.\n::: {style=\"position: relative;\"}\n{{&lt; arrow from=\"50,50\" to=\"200,100\" position=\"absolute\" &gt;}}\n:::"
+  },
+  {
+    "objectID": "index.html#format-support",
+    "href": "index.html#format-support",
+    "title": "quarto-arrow",
+    "section": "Format Support",
+    "text": "Format Support\n\n\n\nFormat\nStatus\nNotes\n\n\n\n\nHTML\nFull support\nAll features available\n\n\nPDF\nFull support\nUses TikZ (example)\n\n\nTypst\nFull support\nUses CeTZ (example)\n\n\nRevealJS\nFull support\nDraw animations (example)\n\n\nOther\nFallback\nRenders as -&gt; text\n\n\n\n\nPDF Setup\nFor PDF output, add TikZ to your document header:\n---\nformat: pdf\nheader-includes:\n  - \\usepackage{tikz}\n  - \\usetikzlibrary{arrows.meta}\n---\n\n\nTypst Setup\nTypst output uses the CeTZ package which is automatically imported. No additional setup required:\n---\nformat: typst\n---"
+  },
+  {
+    "objectID": "index.html#links",
+    "href": "index.html#links",
+    "title": "quarto-arrow",
+    "section": "Links",
+    "text": "Links\n\nGitHub Repository\nReport Issues"
+  },
+  {
+    "objectID": "examples/styling.html",
+    "href": "examples/styling.html",
+    "title": "Styling Options",
+    "section": "",
+    "text": "Use any valid CSS color value.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"red\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"blue\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"green\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"#ff6600\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"rgb(128, 0, 128)\" &gt;}}"
+  },
+  {
+    "objectID": "examples/styling.html#colors",
+    "href": "examples/styling.html#colors",
+    "title": "Styling Options",
+    "section": "",
+    "text": "Use any valid CSS color value.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"red\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"blue\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"green\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"#ff6600\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" color=\"rgb(128, 0, 128)\" &gt;}}"
+  },
+  {
+    "objectID": "examples/styling.html#stroke-width",
+    "href": "examples/styling.html#stroke-width",
+    "title": "Styling Options",
+    "section": "Stroke Width",
+    "text": "Stroke Width\nControl the thickness of the arrow line.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" width=\"1\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" width=\"2\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" width=\"4\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" width=\"6\" &gt;}}"
+  },
+  {
+    "objectID": "examples/styling.html#arrowhead-size",
+    "href": "examples/styling.html#arrowhead-size",
+    "title": "Styling Options",
+    "section": "Arrowhead Size",
+    "text": "Arrowhead Size\nAdjust the size of the arrowhead.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" size=\"5\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" size=\"10\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" size=\"15\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" size=\"20\" &gt;}}"
+  },
+  {
+    "objectID": "examples/styling.html#dash-patterns",
+    "href": "examples/styling.html#dash-patterns",
+    "title": "Styling Options",
+    "section": "Dash Patterns",
+    "text": "Dash Patterns\nCreate dashed or dotted lines.\n\nDefault Dash\n{{&lt; arrow from=\"50,30\" to=\"250,30\" dash=\"true\" &gt;}}\n\n\n\nCustom Dash Pattern\n{{&lt; arrow from=\"50,30\" to=\"250,30\" dash=\"10,5\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" dash=\"5,2\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" dash=\"15,5,5,5\" &gt;}}"
+  },
+  {
+    "objectID": "examples/styling.html#opacity",
+    "href": "examples/styling.html#opacity",
+    "title": "Styling Options",
+    "section": "Opacity",
+    "text": "Opacity\nControl the transparency of the arrow.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" opacity=\"1\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" opacity=\"0.7\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" opacity=\"0.4\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" opacity=\"0.2\" &gt;}}"
+  },
+  {
+    "objectID": "examples/styling.html#combined-styling",
+    "href": "examples/styling.html#combined-styling",
+    "title": "Styling Options",
+    "section": "Combined Styling",
+    "text": "Combined Styling\nMix and match all styling options.\n{{&lt; arrow from=\"50,50\" to=\"300,50\" control1=\"175,120\" color=\"hotpink\" width=\"3\" size=\"12\" &gt;}}\n\n{{&lt; arrow from=\"50,50\" to=\"300,50\" control1=\"175,120\" color=\"teal\" width=\"2\" dash=\"8,4\" opacity=\"0.8\" &gt;}}\n\n{{&lt; arrow from=\"50,50\" to=\"300,50\" control1=\"100,0\" control2=\"250,100\" color=\"purple\" width=\"4\" size=\"15\" &gt;}}"
+  },
+  {
+    "objectID": "examples/linestyles.html",
+    "href": "examples/linestyles.html",
+    "title": "Line Styles",
+    "section": "",
+    "text": "{{&lt; arrow from=\"50,30\" to=\"250,30\" &gt;}}"
+  },
+  {
+    "objectID": "examples/linestyles.html#single-line-default",
+    "href": "examples/linestyles.html#single-line-default",
+    "title": "Line Styles",
+    "section": "",
+    "text": "{{&lt; arrow from=\"50,30\" to=\"250,30\" &gt;}}"
+  },
+  {
+    "objectID": "examples/linestyles.html#dotted-line",
+    "href": "examples/linestyles.html#dotted-line",
+    "title": "Line Styles",
+    "section": "Dotted Line",
+    "text": "Dotted Line\nUse line=\"dot\" for a dotted line pattern.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"dot\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"dot\" width=\"3\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"dot\" color=\"blue\" &gt;}}"
+  },
+  {
+    "objectID": "examples/linestyles.html#double-line",
+    "href": "examples/linestyles.html#double-line",
+    "title": "Line Styles",
+    "section": "Double Line",
+    "text": "Double Line\nUse line=\"double\" for a parallel double line.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"double\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"double\" width=\"2\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"double\" color=\"red\" &gt;}}"
+  },
+  {
+    "objectID": "examples/linestyles.html#triple-line",
+    "href": "examples/linestyles.html#triple-line",
+    "title": "Line Styles",
+    "section": "Triple Line",
+    "text": "Triple Line\nUse line=\"triple\" for three parallel lines.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"triple\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"triple\" width=\"2\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"triple\" color=\"purple\" &gt;}}"
+  },
+  {
+    "objectID": "examples/linestyles.html#with-curves",
+    "href": "examples/linestyles.html#with-curves",
+    "title": "Line Styles",
+    "section": "With Curves",
+    "text": "With Curves\nLine styles work with curved arrows too.\n\nDotted Curve\n{{&lt; arrow from=\"50,80\" to=\"250,80\" control1=\"150,20\" line=\"dot\" color=\"teal\" &gt;}}\n\n\n\nDouble Curve\n{{&lt; arrow from=\"50,80\" to=\"250,80\" control1=\"150,20\" line=\"double\" color=\"crimson\" &gt;}}\n\n\n\nTriple S-Curve\n{{&lt; arrow from=\"50,30\" to=\"250,130\" control1=\"150,0\" control2=\"150,160\" line=\"triple\" color=\"steelblue\" &gt;}}"
+  },
+  {
+    "objectID": "examples/linestyles.html#combined-with-dash",
+    "href": "examples/linestyles.html#combined-with-dash",
+    "title": "Line Styles",
+    "section": "Combined with Dash",
+    "text": "Combined with Dash\nYou can combine line=\"dot\" with dash patterns too, though dot takes precedence if both are set.\n{{&lt; arrow from=\"50,30\" to=\"250,30\" line=\"double\" dash=\"true\" &gt;}}"
+  },
+  {
+    "objectID": "examples/revealjs.html#basic-arrow",
+    "href": "examples/revealjs.html#basic-arrow",
+    "title": "Arrows in RevealJS",
+    "section": "Basic Arrow",
+    "text": "Basic Arrow\n\nA simple straight arrow."
+  },
+  {
+    "objectID": "examples/revealjs.html#curved-arrow",
+    "href": "examples/revealjs.html#curved-arrow",
+    "title": "Arrows in RevealJS",
+    "section": "Curved Arrow",
+    "text": "Curved Arrow\n\nQuadratic Bezier curve."
+  },
+  {
+    "objectID": "examples/revealjs.html#s-curve-arrow",
+    "href": "examples/revealjs.html#s-curve-arrow",
+    "title": "Arrows in RevealJS",
+    "section": "S-Curve Arrow",
+    "text": "S-Curve Arrow\n\nCubic Bezier for complex curves."
+  },
+  {
+    "objectID": "examples/revealjs.html#styled-arrows",
+    "href": "examples/revealjs.html#styled-arrows",
+    "title": "Arrows in RevealJS",
+    "section": "Styled Arrows",
+    "text": "Styled Arrows\n\n\n\nDifferent colors, widths, and styles."
+  },
+  {
+    "objectID": "examples/revealjs.html#annotations",
+    "href": "examples/revealjs.html#annotations",
+    "title": "Arrows in RevealJS",
+    "section": "Annotations",
+    "text": "Annotations\n\nKey Point Here\nSome important content that needs visual emphasis."
+  },
+  {
+    "objectID": "examples/arrowheads.html#arrowhead-size",
+    "href": "examples/arrowheads.html#arrowhead-size",
+    "title": "Arrowhead Styles",
+    "section": "Arrowhead Size",
+    "text": "Arrowhead Size\nUse head-size to set the arrowhead size independently from size.\n\nDefault Size\n{{&lt; arrow from=\"50,30\" to=\"250,30\" &gt;}}\n\n\n\nSmall Arrowhead\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head-size=\"5\" &gt;}}\n\n\n\nLarge Arrowhead\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head-size=\"20\" &gt;}}\n\n\n\nWith Different Styles\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"stealth\" head-size=\"15\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,30\" head=\"diamond\" head-size=\"18\" color=\"teal\" &gt;}}"
+  },
+  {
+    "objectID": "examples/labels.html",
+    "href": "examples/labels.html",
+    "title": "Labels",
+    "section": "",
+    "text": "Add text labels to arrows with the label parameter.\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Click here\" &gt;}}\nClick here"
+  },
+  {
+    "objectID": "examples/labels.html#basic-label",
+    "href": "examples/labels.html#basic-label",
+    "title": "Labels",
+    "section": "",
+    "text": "Add text labels to arrows with the label parameter.\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Click here\" &gt;}}\nClick here"
+  },
+  {
+    "objectID": "examples/labels.html#label-position",
+    "href": "examples/labels.html#label-position",
+    "title": "Labels",
+    "section": "Label Position",
+    "text": "Label Position\nUse label-position to place the label at different points along the arrow.\n\nStart\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Start\" label-position=\"start\" &gt;}}\nStart\n\n\nMiddle (default)\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Middle\" label-position=\"middle\" &gt;}}\nMiddle\n\n\nEnd\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"End\" label-position=\"end\" &gt;}}\nEnd"
+  },
+  {
+    "objectID": "examples/labels.html#label-offset",
+    "href": "examples/labels.html#label-offset",
+    "title": "Labels",
+    "section": "Label Offset",
+    "text": "Label Offset\nUse label-offset to control the distance from the line.\n\nSmall Offset\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Close\" label-offset=\"5\" &gt;}}\nClose\n\n\nDefault Offset (10)\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Default\" &gt;}}\nDefault\n\n\nLarge Offset\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Far\" label-offset=\"25\" &gt;}}\nFar"
+  },
+  {
+    "objectID": "examples/labels.html#labels-with-curves",
+    "href": "examples/labels.html#labels-with-curves",
+    "title": "Labels",
+    "section": "Labels with Curves",
+    "text": "Labels with Curves\nLabels follow the curve and position perpendicular to the path.\n\nQuadratic Curve\n{{&lt; arrow from=\"50,80\" to=\"250,80\" control1=\"150,20\" label=\"Curved\" &gt;}}\nCurved\n\n\nS-Curve\n{{&lt; arrow from=\"50,50\" to=\"250,120\" control1=\"150,0\" control2=\"150,170\" label=\"S-Curve\" &gt;}}\nS-Curve\n\n\nMultiple Positions on Curve\n{{&lt; arrow from=\"50,80\" to=\"250,80\" control1=\"150,20\" label=\"Start\" label-position=\"start\" color=\"blue\" &gt;}}\nStart\n{{&lt; arrow from=\"50,80\" to=\"250,80\" control1=\"150,20\" label=\"Middle\" label-position=\"middle\" color=\"green\" &gt;}}\nMiddle\n{{&lt; arrow from=\"50,80\" to=\"250,80\" control1=\"150,20\" label=\"End\" label-position=\"end\" color=\"red\" &gt;}}\nEnd"
+  },
+  {
+    "objectID": "examples/labels.html#labels-with-styling",
+    "href": "examples/labels.html#labels-with-styling",
+    "title": "Labels",
+    "section": "Labels with Styling",
+    "text": "Labels with Styling\nLabels inherit the arrow’s color.\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Red Arrow\" color=\"red\" &gt;}}\nRed Arrow\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Blue Stealth\" color=\"steelblue\" head=\"stealth\" &gt;}}\nBlue Stealth\n{{&lt; arrow from=\"50,50\" to=\"250,50\" label=\"Thick Line\" width=\"4\" head-size=\"15\" &gt;}}\nThick Line"
+  },
+  {
+    "objectID": "examples/curves.html",
+    "href": "examples/curves.html",
+    "title": "Advanced Curves",
+    "section": "",
+    "text": "Use curve (0-1) instead of manually specifying control points. Higher values create more pronounced curves.\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0\" &gt;}}\n\n\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.3\" &gt;}}\n\n\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.5\" &gt;}}\n\n\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.8\" &gt;}}\n\n\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"1\" &gt;}}"
+  },
+  {
+    "objectID": "examples/curves.html#simple-curve-parameter",
+    "href": "examples/curves.html#simple-curve-parameter",
+    "title": "Advanced Curves",
+    "section": "",
+    "text": "Use curve (0-1) instead of manually specifying control points. Higher values create more pronounced curves.\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0\" &gt;}}\n\n\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.3\" &gt;}}\n\n\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.5\" &gt;}}\n\n\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.8\" &gt;}}\n\n\n\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"1\" &gt;}}"
+  },
+  {
+    "objectID": "examples/curves.html#bend-direction",
+    "href": "examples/curves.html#bend-direction",
+    "title": "Advanced Curves",
+    "section": "Bend Direction",
+    "text": "Bend Direction\nUse bend to control which direction the curve bends.\n\nBend Left (default)\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.5\" bend=\"left\" &gt;}}\n\n\n\nBend Right\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.5\" bend=\"right\" &gt;}}"
+  },
+  {
+    "objectID": "examples/curves.html#bend-with-angles",
+    "href": "examples/curves.html#bend-with-angles",
+    "title": "Advanced Curves",
+    "section": "Bend with Angles",
+    "text": "Bend with Angles\nSpecify exact bend angle in degrees.\n\n45 Degrees\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.5\" bend=\"45\" &gt;}}\n\n\n\n135 Degrees\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.5\" bend=\"135\" &gt;}}\n\n\n\n-45 Degrees\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.5\" bend=\"-45\" &gt;}}"
+  },
+  {
+    "objectID": "examples/curves.html#diagonal-arrows",
+    "href": "examples/curves.html#diagonal-arrows",
+    "title": "Advanced Curves",
+    "section": "Diagonal Arrows",
+    "text": "Diagonal Arrows\nCurve and bend work with any arrow direction.\n\nDiagonal Down-Right\n{{&lt; arrow from=\"50,30\" to=\"250,100\" curve=\"0.5\" bend=\"left\" color=\"blue\" &gt;}}\n\n{{&lt; arrow from=\"50,30\" to=\"250,100\" curve=\"0.5\" bend=\"right\" color=\"red\" &gt;}}\n\n\n\nDiagonal Up-Right\n{{&lt; arrow from=\"50,100\" to=\"250,30\" curve=\"0.5\" bend=\"left\" color=\"green\" &gt;}}\n\n{{&lt; arrow from=\"50,100\" to=\"250,30\" curve=\"0.5\" bend=\"right\" color=\"purple\" &gt;}}"
+  },
+  {
+    "objectID": "examples/curves.html#vertical-arrows",
+    "href": "examples/curves.html#vertical-arrows",
+    "title": "Advanced Curves",
+    "section": "Vertical Arrows",
+    "text": "Vertical Arrows\n{{&lt; arrow from=\"50,20\" to=\"50,120\" curve=\"0.5\" bend=\"left\" &gt;}}\n\n{{&lt; arrow from=\"150,20\" to=\"150,120\" curve=\"0.5\" bend=\"right\" &gt;}}"
+  },
+  {
+    "objectID": "examples/curves.html#combined-with-labels",
+    "href": "examples/curves.html#combined-with-labels",
+    "title": "Advanced Curves",
+    "section": "Combined with Labels",
+    "text": "Combined with Labels\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.6\" label=\"Easy curves!\" &gt;}}\nEasy curves!"
+  },
+  {
+    "objectID": "examples/curves.html#combined-with-styling",
+    "href": "examples/curves.html#combined-with-styling",
+    "title": "Advanced Curves",
+    "section": "Combined with Styling",
+    "text": "Combined with Styling\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.5\" bend=\"left\" color=\"crimson\" head=\"stealth\" width=\"3\" &gt;}}\n\n{{&lt; arrow from=\"50,50\" to=\"250,50\" curve=\"0.7\" bend=\"right\" color=\"steelblue\" line=\"double\" &gt;}}"
+  },
+  {
+    "objectID": "examples/curves.html#manual-vs-auto",
+    "href": "examples/curves.html#manual-vs-auto",
+    "title": "Advanced Curves",
+    "section": "Manual vs Auto",
+    "text": "Manual vs Auto\nCompare manual control points with the simplified curve parameter.\n\nManual (control1)\n{{&lt; arrow from=\"50,80\" to=\"250,80\" control1=\"150,20\" color=\"gray\" &gt;}}\n\n\n\nAuto (curve + bend)\n{{&lt; arrow from=\"50,80\" to=\"250,80\" curve=\"0.6\" bend=\"left\" color=\"teal\" &gt;}}"
+  },
+  {
+    "objectID": "examples/curves.html#multiple-waypoints",
+    "href": "examples/curves.html#multiple-waypoints",
+    "title": "Advanced Curves",
+    "section": "Multiple Waypoints",
+    "text": "Multiple Waypoints\nUse waypoints to create complex paths through multiple points.\n\nBasic Waypoints (smooth)\n{{&lt; arrow from=\"30,50\" to=\"270,50\" waypoints=\"100,20; 150,80; 200,20\" &gt;}}\n\n\n\nZigzag Path (smooth=false)\n{{&lt; arrow from=\"30,50\" to=\"270,50\" waypoints=\"100,20; 150,80; 200,20\" smooth=\"false\" &gt;}}\n\n\n\nComplex Path\n{{&lt; arrow from=\"30,80\" to=\"270,80\" waypoints=\"80,30; 120,100; 180,30; 220,100\" color=\"purple\" &gt;}}\n\n\n\nStaircase Pattern\n{{&lt; arrow from=\"30,100\" to=\"270,20\" waypoints=\"80,100; 80,60; 150,60; 150,20; 220,20\" smooth=\"false\" color=\"steelblue\" &gt;}}\n\n\n\nSmooth Staircase\n{{&lt; arrow from=\"30,100\" to=\"270,20\" waypoints=\"80,100; 80,60; 150,60; 150,20; 220,20\" color=\"teal\" &gt;}}\n\n\n\nLoop Around\n{{&lt; arrow from=\"30,60\" to=\"270,60\" waypoints=\"80,20; 180,20; 180,100; 80,100; 80,60\" color=\"crimson\" head=\"stealth\" &gt;}}\n\n\n\nMany Waypoints\n{{&lt; arrow from=\"20,50\" to=\"280,50\" waypoints=\"60,30; 100,70; 140,30; 180,70; 220,30\" color=\"orange\" width=\"3\" &gt;}}"
+  },
+  {
+    "objectID": "examples/revealjs.html#fragment-arrows",
+    "href": "examples/revealjs.html#fragment-arrows",
+    "title": "Arrows in RevealJS",
+    "section": "Fragment Arrows",
+    "text": "Fragment Arrows\nArrows can appear as RevealJS fragments."
+  },
+  {
+    "objectID": "examples/revealjs.html#fragment-with-index",
+    "href": "examples/revealjs.html#fragment-with-index",
+    "title": "Arrows in RevealJS",
+    "section": "Fragment with Index",
+    "text": "Fragment with Index\nControl the order of appearance with fragment-index."
+  },
+  {
+    "objectID": "examples/revealjs.html#fragment-styles",
+    "href": "examples/revealjs.html#fragment-styles",
+    "title": "Arrows in RevealJS",
+    "section": "Fragment Styles",
+    "text": "Fragment Styles\nUse different RevealJS fragment animations."
+  },
+  {
+    "objectID": "examples/revealjs.html#step-by-step-diagram",
+    "href": "examples/revealjs.html#step-by-step-diagram",
+    "title": "Arrows in RevealJS",
+    "section": "Step-by-Step Diagram",
+    "text": "Step-by-Step Diagram\n\nStart →  Step 1 →  Step 2 →  Done!"
+  },
+  {
+    "objectID": "examples/revealjs.html#draw-animation",
+    "href": "examples/revealjs.html#draw-animation",
+    "title": "Arrows in RevealJS",
+    "section": "Draw Animation",
+    "text": "Draw Animation\nArrows animate as they are drawn when using fragment=\"true\"."
+  },
+  {
+    "objectID": "examples/revealjs.html#animation-speed",
+    "href": "examples/revealjs.html#animation-speed",
+    "title": "Arrows in RevealJS",
+    "section": "Animation Speed",
+    "text": "Animation Speed\nControl draw speed with fragment-duration (seconds).\n\nFast (0.3s)\n\nSlow (1s)"
+  },
+  {
+    "objectID": "examples/revealjs.html#fragment-order",
+    "href": "examples/revealjs.html#fragment-order",
+    "title": "Arrows in RevealJS",
+    "section": "Fragment Order",
+    "text": "Fragment Order\nControl the order with fragment-index.\n\nThird (red)\n\nSecond (blue)\n\nFirst (green)"
+  },
+  {
+    "objectID": "examples/revealjs.html#curved-draw-animation",
+    "href": "examples/revealjs.html#curved-draw-animation",
+    "title": "Arrows in RevealJS",
+    "section": "Curved Draw Animation",
+    "text": "Curved Draw Animation\nDraw animation works with curves too."
+  }
+]
