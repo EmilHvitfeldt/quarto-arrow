@@ -174,6 +174,18 @@ Arrows work in RevealJS slides with draw animations that reveal arrows step-by-s
 | `barbed` | Hook-like, open arrow |
 | `none` | No arrowhead |
 
+### Color Support
+
+The `color` parameter accepts different values depending on output format:
+
+| Format | Supported Values |
+|--------|------------------|
+| HTML/RevealJS | All CSS colors: names (`red`, `steelblue`), hex (`#ff0000`), `rgb()`, `rgba()`, `hsl()` |
+| PDF | LaTeX color names: `red`, `blue`, `green`, `yellow`, `orange`, `purple`, `cyan`, `magenta`, `gray`, `black`, `white` |
+| Typst | Common color names with automatic conversion for CSS names like `crimson`, `teal`, `pink` |
+
+For maximum cross-format compatibility, use basic color names: `red`, `blue`, `green`, `black`, `orange`, `purple`, `gray`.
+
 ### Positioning Modes
 
 **Inline (default):** Arrow renders in document flow.
