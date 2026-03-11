@@ -12,6 +12,7 @@ project:
     - examples/positioned.qmd
     - examples/revealjs.qmd
     - examples/pdf.qmd
+    - examples/typst.qmd
 
 website:
   title: "quarto-arrow"
@@ -39,6 +40,8 @@ website:
             text: RevealJS
           - href: examples/pdf.qmd
             text: PDF
+          - href: examples/typst.qmd
+            text: Typst
 
 format:
   html:

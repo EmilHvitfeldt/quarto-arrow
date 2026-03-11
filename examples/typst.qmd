@@ -1,0 +1,74 @@
+---
+title: "Arrows in Typst"
+format: typst
+filters:
+  - arrow
+---
+
+## Basic Arrows
+
+Straight line:
+
+{{< arrow from="50,30" to="250,30" >}}
+
+## Curves
+
+Quadratic Bezier:
+
+{{< arrow from="50,50" to="250,50" control1="150,0" >}}
+
+Cubic Bezier:
+
+{{< arrow from="50,30" to="250,100" control1="100,0" control2="200,130" >}}
+
+Simple curve parameter:
+
+{{< arrow from="50,50" to="250,50" curve="0.5" >}}
+
+## Colors
+
+Red: {{< arrow from="50,30" to="200,30" color="red" >}}
+
+Blue: {{< arrow from="50,30" to="200,30" color="blue" >}}
+
+Green: {{< arrow from="50,30" to="200,30" color="green" >}}
+
+## Line Width
+
+Width 1: {{< arrow from="50,30" to="200,30" width="1" >}}
+
+Width 2: {{< arrow from="50,30" to="200,30" width="2" >}}
+
+Width 4: {{< arrow from="50,30" to="200,30" width="4" >}}
+
+## Arrowhead Styles
+
+Arrow (default): {{< arrow from="50,30" to="200,30" head="arrow" >}}
+
+Stealth: {{< arrow from="50,30" to="200,30" head="stealth" >}}
+
+Circle: {{< arrow from="50,30" to="200,30" head="circle" >}}
+
+Bar: {{< arrow from="50,30" to="200,30" head="bar" >}}
+
+None: {{< arrow from="50,30" to="200,30" head="none" >}}
+
+## Arrowhead Placement
+
+End only: {{< arrow from="50,30" to="200,30" >}}
+
+Start only: {{< arrow from="50,30" to="200,30" head-start="true" head-end="false" >}}
+
+Both ends: {{< arrow from="50,30" to="200,30" head-start="true" head-end="true" >}}
+
+## Dash Patterns
+
+Dashed: {{< arrow from="50,30" to="200,30" dash="true" >}}
+
+Dotted: {{< arrow from="50,30" to="200,30" line="dot" >}}
+
+## Waypoints
+
+Smooth: {{< arrow from="30,50" to="270,50" waypoints="100,20; 150,80; 200,20" >}}
+
+Straight: {{< arrow from="30,50" to="270,50" waypoints="100,20; 150,80; 200,20" smooth="false" >}}

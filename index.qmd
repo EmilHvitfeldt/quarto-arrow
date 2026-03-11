@@ -208,7 +208,7 @@ Arrows work in RevealJS slides for visual presentations.
 |--------|--------|-------|
 | HTML | Full support | All features available |
 | PDF | Full support | Uses TikZ (see below) |
-| Typst | Placeholder | Coming soon |
+| Typst | Full support | Uses CeTZ (see below) |
 | RevealJS | Full support | Works with draw animations |
 | Other | Fallback | Renders as `->` text |
 
@@ -222,6 +222,16 @@ format: pdf
 header-includes:
   - \usepackage{tikz}
   - \usetikzlibrary{arrows.meta}
+---
+```
+
+### Typst Setup
+
+Typst output uses the CeTZ package which is automatically imported. No additional setup required:
+
+```yaml
+---
+format: typst
 ---
 ```
 

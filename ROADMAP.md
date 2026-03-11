@@ -90,25 +90,17 @@
 
 ## Typst Support
 
-Typst is a modern typesetting system with native vector graphics capabilities.
+Typst support is implemented using the CeTZ package.
 
-### Implementation Approaches
-
-| Approach | Description | Pros | Cons |
-|----------|-------------|------|------|
-| **Raw Typst paths** | Generate native `path()` commands | Native rendering, no dependencies | Limited feature set |
-| **CeTZ package** | Use the CeTZ drawing library | Rich features, proper arrowheads | Requires package import |
-| **SVG embed** | Embed SVG via `image.decode()` | Reuse existing SVG code | May have rendering quirks |
-
-### Planned Typst Features
-- [ ] Detect Typst format via `quarto.doc.isFormat("typst")`
-- [ ] Generate native Typst path syntax
-- [ ] Support Typst units (`pt`, `cm`, `mm`, `em`, `%`)
-- [ ] Typst color syntax support
-- [ ] CeTZ integration for advanced features:
-  - [ ] Native arrowhead marks
-  - [ ] Bezier curves via `bezier()`
-  - [ ] Coordinate transformations
+### Implemented Features
+- [x] Detect Typst format via `quarto.doc.isFormat("typst")`
+- [x] CeTZ integration with:
+  - [x] Native arrowhead marks
+  - [x] Bezier curves via `bezier()`
+  - [x] Catmull-Rom curves for waypoints
+  - [x] Line styles (dashed, dotted)
+  - [x] Colors
+  - [x] Line widths
 
 ### Typst Path Syntax Reference
 

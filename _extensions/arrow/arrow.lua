@@ -946,13 +946,139 @@ local function render_latex(opts, adj_from, adj_to, adj_c1, adj_c2, adj_waypoint
 end
 
 --------------------------------------------------------------------------------
--- Typst Output (placeholder for future implementation)
+-- Typst Output using CeTZ
 --------------------------------------------------------------------------------
 
-local function render_typst(opts, bounds)
-  -- TODO: Implement native Typst path generation
-  -- For now, return a placeholder
-  return pandoc.RawInline("typst", "#text(fill: gray)[(arrow)]")
+local function render_typst(opts, adj_from, adj_to, adj_c1, adj_c2, adj_waypoints)
+  -- Scale factor: convert pixels to pt (similar to PDF)
+  local scale = 0.75  -- pixels to pt roughly
+
+  -- Build stroke style
+  local stroke_parts = {}
+
+  -- Line width
+  table.insert(stroke_parts, string.format("%.1fpt", opts.width))
+
+  -- Color
+  if opts.color ~= "black" then
+    -- Try to use Typst color names or rgb
+    local color = opts.color
+    -- Common CSS colors that work in Typst
+    local typst_colors = {
+      red = "red", blue = "blue", green = "green", yellow = "yellow",
+      orange = "orange", purple = "purple", black = "black", white = "white",
+      gray = "gray", grey = "gray", cyan = "aqua", magenta = "fuchsia",
+      pink = "rgb(255, 192, 203)", brown = "rgb(165, 42, 42)",
+      crimson = "rgb(220, 20, 60)", teal = "rgb(0, 128, 128)",
+      steelblue = "rgb(70, 130, 180)", navy = "rgb(0, 0, 128)"
+    }
+    color = typst_colors[opts.color:lower()] or opts.color
+    table.insert(stroke_parts, color)
+  end
+
+  local stroke = table.concat(stroke_parts, " + ")
+
+  -- Build mark (arrowhead) specification
+  local mark_end = ""
+  local mark_start = ""
+
+  local arrow_mark = "\">\""  -- default arrow
+  if opts.head == "stealth" then
+    arrow_mark = "\"stealth\""
+  elseif opts.head == "diamond" then
+    arrow_mark = "\"diamond\""
+  elseif opts.head == "circle" or opts.head == "dot" then
+    arrow_mark = "\"o\""
+  elseif opts.head == "square" then
+    arrow_mark = "\"square\""
+  elseif opts.head == "bar" then
+    arrow_mark = "\"|\""
+  elseif opts.head == "none" then
+    arrow_mark = ""
+  end
+
+  if arrow_mark ~= "" then
+    if opts.head_end then
+      mark_end = string.format("end: %s", arrow_mark)
+    end
+    if opts.head_start then
+      mark_start = string.format("start: %s", arrow_mark)
+    end
+  end
+
+  local mark_spec = ""
+  if mark_start ~= "" or mark_end ~= "" then
+    local mark_parts = {}
+    if mark_start ~= "" then table.insert(mark_parts, mark_start) end
+    if mark_end ~= "" then table.insert(mark_parts, mark_end) end
+    mark_spec = string.format(", mark: (%s)", table.concat(mark_parts, ", "))
+  end
+
+  -- Build the path/line command
+  local draw_cmd
+
+  if adj_waypoints and #adj_waypoints > 0 then
+    -- Path through waypoints using catmull or line
+    local points = {adj_from}
+    for _, wp in ipairs(adj_waypoints) do
+      table.insert(points, wp)
+    end
+    table.insert(points, adj_to)
+
+    local coords = {}
+    for _, p in ipairs(points) do
+      table.insert(coords, string.format("(%.1fpt, %.1fpt)", p.x * scale, -p.y * scale))
+    end
+
+    if opts.smooth then
+      draw_cmd = string.format("catmull(%s, tension: 0.5)", table.concat(coords, ", "))
+    else
+      draw_cmd = string.format("line(%s)", table.concat(coords, ", "))
+    end
+  elseif adj_c1 and adj_c2 then
+    -- Cubic Bezier
+    draw_cmd = string.format("bezier((%.1fpt, %.1fpt), (%.1fpt, %.1fpt), (%.1fpt, %.1fpt), (%.1fpt, %.1fpt))",
+      adj_from.x * scale, -adj_from.y * scale,
+      adj_to.x * scale, -adj_to.y * scale,
+      adj_c1.x * scale, -adj_c1.y * scale,
+      adj_c2.x * scale, -adj_c2.y * scale)
+  elseif adj_c1 then
+    -- Quadratic Bezier (use cubic with same control point)
+    draw_cmd = string.format("bezier((%.1fpt, %.1fpt), (%.1fpt, %.1fpt), (%.1fpt, %.1fpt), (%.1fpt, %.1fpt))",
+      adj_from.x * scale, -adj_from.y * scale,
+      adj_to.x * scale, -adj_to.y * scale,
+      adj_c1.x * scale, -adj_c1.y * scale,
+      adj_c1.x * scale, -adj_c1.y * scale)
+  else
+    -- Straight line
+    draw_cmd = string.format("line((%.1fpt, %.1fpt), (%.1fpt, %.1fpt))",
+      adj_from.x * scale, -adj_from.y * scale,
+      adj_to.x * scale, -adj_to.y * scale)
+  end
+
+  -- Build dash pattern
+  local dash_spec = ""
+  if opts.dash then
+    if opts.dash == "true" then
+      dash_spec = ', stroke: (dash: "dashed")'
+    else
+      dash_spec = string.format(', stroke: (dash: (%s))', opts.dash)
+    end
+  elseif opts.line == "dot" then
+    dash_spec = ', stroke: (dash: "dotted")'
+  end
+
+  -- Complete CeTZ code
+  local typst = string.format([[#{{
+import "@preview/cetz:0.3.2"
+cetz.canvas({{
+  import cetz.draw: *
+  set-style(stroke: %s%s)
+  %s
+}})
+}}]], stroke, mark_spec, draw_cmd)
+
+  return pandoc.RawInline("typst", typst)
 end
 
 --------------------------------------------------------------------------------
@@ -1016,7 +1142,7 @@ function arrow(args, kwargs, meta, raw_args, context)
   if quarto.doc.isFormat("html:js") then
     return render_html(svg, opts, bounds)
   elseif quarto.doc.isFormat("typst") then
-    return render_typst(opts, bounds)
+    return render_typst(opts, adj_from, adj_to, adj_c1, adj_c2, adj_waypoints)
   elseif quarto.doc.isFormat("pdf") or quarto.doc.isFormat("latex") then
     return render_latex(opts, adj_from, adj_to, adj_c1, adj_c2, adj_waypoints)
   else
