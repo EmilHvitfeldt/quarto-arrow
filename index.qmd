@@ -95,7 +95,7 @@ Absolute and fixed positioning for document-level annotations.
 
 ### RevealJS Presentations
 
-Arrows work in RevealJS slides for visual presentations.
+Arrows work in RevealJS slides with draw animations that reveal arrows step-by-step.
 
 [View Example](examples/revealjs.html){.btn .btn-primary}
 [Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/revealjs.qmd){.btn .btn-secondary}
@@ -207,9 +207,9 @@ Arrows work in RevealJS slides for visual presentations.
 | Format | Status | Notes |
 |--------|--------|-------|
 | HTML | Full support | All features available |
-| PDF | Full support | Uses TikZ (see below) |
-| Typst | Full support | Uses CeTZ (see below) |
-| RevealJS | Full support | Works with draw animations |
+| PDF | Full support | Uses TikZ ([example](examples/pdf.qmd)) |
+| Typst | Full support | Uses CeTZ ([example](examples/typst.qmd)) |
+| RevealJS | Full support | Draw animations ([example](examples/revealjs.qmd)) |
 | Other | Fallback | Renders as `->` text |
 
 ### PDF Setup
