@@ -1,0 +1,119 @@
+---
+title: "Styling Options"
+format: html
+filters:
+  - arrow
+---
+
+## Colors
+
+Use any valid CSS color value.
+
+{{< arrow from="50,30" to="250,30" color="red" >}}
+
+{{< arrow from="50,30" to="250,30" color="blue" >}}
+
+{{< arrow from="50,30" to="250,30" color="green" >}}
+
+{{< arrow from="50,30" to="250,30" color="#ff6600" >}}
+
+{{< arrow from="50,30" to="250,30" color="rgb(128, 0, 128)" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" color="red" */>}}
+{{</* arrow from="50,30" to="250,30" color="#ff6600" */>}}
+{{</* arrow from="50,30" to="250,30" color="rgb(128, 0, 128)" */>}}
+```
+
+## Stroke Width
+
+Control the thickness of the arrow line.
+
+{{< arrow from="50,30" to="250,30" width="1" >}}
+
+{{< arrow from="50,30" to="250,30" width="2" >}}
+
+{{< arrow from="50,30" to="250,30" width="4" >}}
+
+{{< arrow from="50,30" to="250,30" width="6" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" width="1" */>}}
+{{</* arrow from="50,30" to="250,30" width="4" */>}}
+```
+
+## Arrowhead Size
+
+Adjust the size of the arrowhead.
+
+{{< arrow from="50,30" to="250,30" size="5" >}}
+
+{{< arrow from="50,30" to="250,30" size="10" >}}
+
+{{< arrow from="50,30" to="250,30" size="15" >}}
+
+{{< arrow from="50,30" to="250,30" size="20" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" size="5" */>}}
+{{</* arrow from="50,30" to="250,30" size="15" */>}}
+```
+
+## Dash Patterns
+
+Create dashed or dotted lines.
+
+### Default Dash
+
+{{< arrow from="50,30" to="250,30" dash="true" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" dash="true" */>}}
+```
+
+### Custom Dash Pattern
+
+{{< arrow from="50,30" to="250,30" dash="10,5" >}}
+
+{{< arrow from="50,30" to="250,30" dash="5,2" >}}
+
+{{< arrow from="50,30" to="250,30" dash="15,5,5,5" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" dash="10,5" */>}}
+{{</* arrow from="50,30" to="250,30" dash="15,5,5,5" */>}}
+```
+
+## Opacity
+
+Control the transparency of the arrow.
+
+{{< arrow from="50,30" to="250,30" opacity="1" >}}
+
+{{< arrow from="50,30" to="250,30" opacity="0.7" >}}
+
+{{< arrow from="50,30" to="250,30" opacity="0.4" >}}
+
+{{< arrow from="50,30" to="250,30" opacity="0.2" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" opacity="0.5" */>}}
+```
+
+## Combined Styling
+
+Mix and match all styling options.
+
+{{< arrow from="50,50" to="300,50" control1="175,120" color="hotpink" width="3" size="12" >}}
+
+{{< arrow from="50,50" to="300,50" control1="175,120" color="teal" width="2" dash="8,4" opacity="0.8" >}}
+
+{{< arrow from="50,50" to="300,50" control1="100,0" control2="250,100" color="purple" width="4" size="15" >}}
+
+```markdown
+{{</* arrow from="50,50" to="300,50" control1="175,120"
+    color="hotpink" width="3" size="12" */>}}
+
+{{</* arrow from="50,50" to="300,50" control1="175,120"
+    color="teal" width="2" dash="8,4" opacity="0.8" */>}}
+```

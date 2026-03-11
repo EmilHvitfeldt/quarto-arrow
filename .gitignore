@@ -1,4 +1,15 @@
-example_files/
-.claude/settings.local.json
+# Generated files
+_site/
+*_files/
+*.html
+*.pdf
 
+# Editor/tool files
+.claude/settings.local.json
 /.luarc.json
+
+# Keep example symlink
+!examples/_extensions
+
+/.quarto/
+**/*.quarto_ipynb

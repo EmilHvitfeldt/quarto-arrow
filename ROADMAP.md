@@ -13,12 +13,12 @@
 - [x] Fixed positioning (viewport-relative)
 - [x] Absolute positioning (container-relative)
 - [x] HTML format support
-- [x] Basic PDF support
 - [x] Text fallback for other formats
-- [x] Percentage-based coordinates (`from="75%,100"`)
-- [x] Viewport units (`from="50vw,10vh"`)
-- [x] Mixed units (`from="50%,100"` - percentage x, pixel y)
-- [x] Auto-resize on window resize (JS-based for dynamic units)
+
+## Known Issues
+
+- **PDF output not working** - SVG arrows don't render in PDF. Needs TikZ or alternative backend.
+- **Percentage-based coordinates** - Implemented but arrows render off-screen due to `scrollWidth` vs `innerWidth` mismatch. See `docs/positioned-arrows-investigation.md` for details.
 
 ## Planned Features
 
@@ -86,9 +86,9 @@
 - [ ] `animate-delay="0.5s"` - start delay
 
 ### Format Support
-- [ ] Better PDF support (TikZ backend)
+- [ ] PDF support (TikZ backend) - currently broken
 - [ ] DOCX support
-- [ ] RevealJS presentation support
+- [x] RevealJS presentation support
 
 ## Typst Support
 

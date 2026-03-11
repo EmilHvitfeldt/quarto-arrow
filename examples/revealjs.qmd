@@ -1,0 +1,46 @@
+---
+title: "Arrows in RevealJS"
+format: revealjs
+filters:
+  - arrow
+---
+
+## Basic Arrow
+
+{{< arrow from="100,200" to="400,200" >}}
+
+A simple straight arrow.
+
+## Curved Arrow
+
+{{< arrow from="100,200" to="400,300" control1="250,100" color="blue" width="3" >}}
+
+Quadratic Bezier curve.
+
+## S-Curve Arrow
+
+{{< arrow from="100,150" to="400,350" control1="200,100" control2="300,400" color="purple" width="3" >}}
+
+Cubic Bezier for complex curves.
+
+## Styled Arrows
+
+{{< arrow from="100,180" to="300,180" color="red" width="2" >}}
+
+{{< arrow from="100,250" to="300,250" color="green" width="4" dash="true" >}}
+
+{{< arrow from="100,320" to="300,320" color="orange" width="3" opacity="0.6" >}}
+
+Different colors, widths, and styles.
+
+## Annotations
+
+::: {style="position: relative;"}
+
+### Key Point Here
+
+Some important content that needs visual emphasis.
+
+{{< arrow from="400,50" to="250,80" control1="350,30" color="crimson" width="2" position="absolute" >}}
+
+:::

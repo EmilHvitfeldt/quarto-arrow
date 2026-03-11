@@ -1,0 +1,40 @@
+---
+title: "Arrows in PDF"
+format: pdf
+filters:
+  - arrow
+---
+
+## Basic Arrows
+
+Straight line arrow:
+
+{{< arrow from="50,30" to="250,30" >}}
+
+## Curved Arrows
+
+Quadratic Bezier curve:
+
+{{< arrow from="50,50" to="250,50" control1="150,0" >}}
+
+Cubic Bezier S-curve:
+
+{{< arrow from="50,30" to="250,100" control1="100,0" control2="200,130" >}}
+
+## Styled Arrows
+
+Red arrow:
+
+{{< arrow from="50,30" to="250,30" color="red" >}}
+
+Thick blue arrow:
+
+{{< arrow from="50,30" to="250,30" color="blue" width="4" >}}
+
+Dashed arrow:
+
+{{< arrow from="50,30" to="250,30" dash="5,3" >}}
+
+## Notes
+
+PDF support renders static SVG arrows. Dynamic features like percentage-based coordinates are not available in PDF output.

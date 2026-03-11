@@ -1,0 +1,140 @@
+---
+title: "quarto-arrow"
+subtitle: "Draw curved SVG arrows in Quarto documents"
+---
+A Quarto extension for drawing arrows with Bezier curves. Perfect for annotations, callouts, and visual explanations.
+
+## Installation
+
+```bash
+quarto add emilhvitfeldt/quarto-arrow
+```
+
+## Quick Start
+
+Add the filter to your YAML header:
+
+```yaml
+---
+title: My Document
+format: html
+filters:
+  - arrow
+---
+```
+
+Then use the shortcode:
+```markdown
+{{</* arrow from="50,50" to="200,100" */>}}
+```
+
+## Examples
+
+### Basic Arrows
+
+Straight lines, quadratic curves, and cubic Bezier curves.
+
+[View Example](examples/basic.html){.btn .btn-primary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/basic.qmd){.btn .btn-secondary}
+
+<iframe src="examples/basic.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
+
+### Styling Options
+
+Colors, stroke widths, dash patterns, and arrowhead sizes.
+
+[View Example](examples/styling.html){.btn .btn-primary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/styling.qmd){.btn .btn-secondary}
+
+<iframe src="examples/styling.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
+
+### Positioned Arrows
+
+Absolute and fixed positioning for document-level annotations.
+
+[View Example](examples/positioned.html){.btn .btn-primary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/positioned.qmd){.btn .btn-secondary}
+
+<iframe src="examples/positioned.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
+
+### RevealJS Presentations
+
+Arrows work in RevealJS slides for visual presentations.
+
+[View Example](examples/revealjs.html){.btn .btn-primary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/revealjs.qmd){.btn .btn-secondary}
+
+<iframe src="examples/revealjs.html" width="100%" height="500" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
+
+## Syntax Reference
+
+### Basic Usage
+
+```markdown
+{{</* arrow from="x1,y1" to="x2,y2" */>}}
+```
+
+### With Control Points
+
+```markdown
+{{</* arrow from="50,50" to="200,100" control1="125,0" */>}}
+{{</* arrow from="50,50" to="200,100" control1="100,0" control2="150,150" */>}}
+```
+
+### Styling Parameters
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `from` | required | Start point `"x,y"` |
+| `to` | required | End point `"x,y"` |
+| `control1` | - | First control point for curves |
+| `control2` | - | Second control point (cubic Bezier) |
+| `color` | `"black"` | Stroke color |
+| `width` | `2` | Stroke width in pixels |
+| `size` | `10` | Arrowhead size |
+| `dash` | - | Dash pattern (e.g., `"5,5"` or `"true"`) |
+| `opacity` | `1` | Stroke opacity (0-1) |
+| `position` | - | `"absolute"` or `"fixed"` |
+
+### Positioning Modes
+
+**Inline (default):** Arrow renders in document flow.
+
+```markdown
+{{</* arrow from="50,50" to="200,100" */>}}
+```
+
+**Absolute:** Positioned relative to document body, scrolls with page.
+
+```markdown
+{{</* arrow from="600,80" to="780,15" position="absolute" */>}}
+```
+
+**Fixed:** Positioned relative to viewport, stays in place while scrolling.
+
+```markdown
+{{</* arrow from="100,100" to="300,50" position="fixed" */>}}
+```
+
+**Scoped Absolute:** Use inside a `position: relative` container.
+
+```markdown
+::: {style="position: relative;"}
+{{</* arrow from="50,50" to="200,100" position="absolute" */>}}
+:::
+```
+
+## Format Support
+
+| Format | Status | Notes |
+|--------|--------|-------|
+| HTML | Full support | All features available |
+| PDF | Basic support | Static arrows only |
+| Typst | Placeholder | Coming soon |
+| RevealJS | Full support | Works in presentations |
+| Other | Fallback | Renders as `->` text |
+
+## Links
+
+- [GitHub Repository](https://github.com/emilhvitfeldt/quarto-arrow)
+- [Report Issues](https://github.com/emilhvitfeldt/quarto-arrow/issues)

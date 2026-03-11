@@ -1,0 +1,34 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - examples/basic.qmd
+    - examples/styling.qmd
+    - examples/positioned.qmd
+    - examples/revealjs.qmd
+    - examples/pdf.qmd
+
+website:
+  title: "quarto-arrow"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - text: Examples
+        menu:
+          - href: examples/basic.qmd
+            text: Basic Arrows
+          - href: examples/styling.qmd
+            text: Styling Options
+          - href: examples/positioned.qmd
+            text: Positioned Arrows
+          - href: examples/revealjs.qmd
+            text: RevealJS
+          - href: examples/pdf.qmd
+            text: PDF
+
+format:
+  html:
+    theme: cosmo
+    toc: true
