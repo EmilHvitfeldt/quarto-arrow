@@ -166,7 +166,7 @@ local MARKER_STYLES = {
     -- Default filled triangle pointing right
     return {
       path = string.format("M 0 0 L %s %s L 0 %s z", size, size/2, size),
-      refX = size,
+      refX = 0,  -- Base of arrowhead, so stroke ends here
       refY = size/2,
       width = size,
       height = size,
@@ -180,7 +180,7 @@ local MARKER_STYLES = {
     local h = size
     return {
       path = string.format("M 0 0 L %s %s L 0 %s L %s %s z", w, h/2, h, w*0.3, h/2),
-      refX = w,
+      refX = w*0.3,  -- Inner notch point, so stroke ends inside
       refY = h/2,
       width = w,
       height = h,
@@ -194,7 +194,7 @@ local MARKER_STYLES = {
     local h = size
     return {
       path = string.format("M 0 %s L %s 0 L %s %s L %s %s z", h/2, w/2, w, h/2, w/2, h),
-      refX = w,
+      refX = w/2,  -- Center of diamond, so stroke ends at middle
       refY = h/2,
       width = w,
       height = h,
@@ -208,7 +208,7 @@ local MARKER_STYLES = {
     return {
       path = string.format("M %s %s m -%s 0 a %s %s 0 1 0 %s 0 a %s %s 0 1 0 -%s 0",
         r, r, r, r, r, r*2, r, r, r*2),
-      refX = size,
+      refX = r,  -- Center of circle, so stroke ends at middle
       refY = r,
       width = size,
       height = size,
@@ -221,7 +221,7 @@ local MARKER_STYLES = {
     -- Square endpoint
     return {
       path = string.format("M 0 0 L %s 0 L %s %s L 0 %s z", size, size, size, size),
-      refX = size,
+      refX = size/2,  -- Center of square, so stroke ends at middle
       refY = size/2,
       width = size,
       height = size,
@@ -235,7 +235,7 @@ local MARKER_STYLES = {
     local h = size
     return {
       path = string.format("M 0 0 L %s 0 L %s %s L 0 %s z", w, w, h, h),
-      refX = w,
+      refX = w/2,  -- Center of bar, so stroke ends at middle
       refY = h/2,
       width = w,
       height = h,
@@ -249,7 +249,7 @@ local MARKER_STYLES = {
     local h = size
     return {
       path = string.format("M 0 0 L %s %s L 0 %s", w, h/2, h),
-      refX = w,
+      refX = w,  -- Tip of barbed arrow (stroke-based, so it connects at tip)
       refY = h/2,
       width = w,
       height = h,
