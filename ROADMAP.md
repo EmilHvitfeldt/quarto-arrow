@@ -38,7 +38,7 @@
   - [x] `square` - square endpoint
   - [x] `bar` / `stop` - flat perpendicular line
 - [x] `head-fill="true|false"` - filled vs outline for applicable styles
-- [ ] `head-size` - independent arrowhead sizing (not tied to stroke width)
+- [x] `head-size` - independent arrowhead sizing (not tied to stroke width)
 
 ### Line Styles
 - [x] `dash="true"` or `dash="5,3"` - dashed lines

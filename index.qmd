@@ -118,6 +118,7 @@ Arrows work in RevealJS slides for visual presentations.
 | `head-start` | `false` | Show arrowhead at start |
 | `head-end` | `true` | Show arrowhead at end |
 | `head-fill` | `true` | Filled (`true`) or outline (`false`) |
+| `head-size` | `size` | Independent arrowhead size (overrides `size`) |
 
 ### Line Styles
 

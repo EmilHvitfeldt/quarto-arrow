@@ -72,6 +72,7 @@ local function parse_options(kwargs)
   opts.color = get_kwarg(kwargs, "color", "black")
   opts.width = get_kwarg_number(kwargs, "width", 2)
   opts.size = get_kwarg_number(kwargs, "size", 10)
+  opts.head_size = get_kwarg_number(kwargs, "head-size", nil)  -- Independent head sizing
 
   -- Line style
   opts.dash = get_kwarg(kwargs, "dash", nil)
@@ -100,7 +101,8 @@ end
 --------------------------------------------------------------------------------
 
 local function calculate_bounds(opts)
-  local padding = opts.size + 10
+  local head_size = opts.head_size or opts.size
+  local padding = head_size + 10
   local all_x = {opts.from.x, opts.to.x}
   local all_y = {opts.from.y, opts.to.y}
 
@@ -259,7 +261,7 @@ local MARKER_STYLES = {
 }
 
 local function build_marker(id, opts)
-  local size = opts.size
+  local size = opts.head_size or opts.size  -- Use head-size if provided, otherwise size
   local color = opts.color
   local style = opts.head
   local fill = opts.head_fill

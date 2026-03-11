@@ -194,3 +194,45 @@ Arrowhead styles work with all curve types.
 ```
 
 {{< arrow from="50,30" to="250,100" control1="100,0" control2="200,130" head="stealth" head-start="true" color="crimson" >}}
+
+## Arrowhead Size
+
+Use `head-size` to set the arrowhead size independently from `size`.
+
+### Default Size
+
+```markdown
+{{</* arrow from="50,30" to="250,30" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" >}}
+
+### Small Arrowhead
+
+```markdown
+{{</* arrow from="50,30" to="250,30" head-size="5" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" head-size="5" >}}
+
+### Large Arrowhead
+
+```markdown
+{{</* arrow from="50,30" to="250,30" head-size="20" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" head-size="20" >}}
+
+### With Different Styles
+
+```markdown
+{{</* arrow from="50,30" to="250,30" head="stealth" head-size="15" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" head="stealth" head-size="15" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" head="diamond" head-size="18" color="teal" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" head="diamond" head-size="18" color="teal" >}}
