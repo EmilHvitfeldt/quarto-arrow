@@ -1,0 +1,343 @@
+-- Arrow shortcode: draws curved SVG arrows with Bezier curves
+-- Usage: {{< arrow from="x1,y1" to="x2,y2" control1="cx1,cy1" control2="cx2,cy2" >}}
+
+--------------------------------------------------------------------------------
+-- Utility Functions
+--------------------------------------------------------------------------------
+
+local function get_kwarg(kwargs, key, default)
+  local val = kwargs[key] and pandoc.utils.stringify(kwargs[key]) or nil
+  if val and val ~= "" then
+    return val
+  end
+  return default
+end
+
+local function get_kwarg_number(kwargs, key, default)
+  local val = get_kwarg(kwargs, key, nil)
+  return tonumber(val) or default
+end
+
+local function get_kwarg_bool(kwargs, key, default)
+  local val = get_kwarg(kwargs, key, nil)
+  if val == nil then return default end
+  return val == "true"
+end
+
+local function parse_point(str)
+  if not str or str == "" then return nil end
+  local x, y = str:match("([^,]+),([^,]+)")
+  if not x or not y then return nil end
+  local nx, ny = tonumber(x), tonumber(y)
+  if not nx or not ny then return nil end
+  return {x = nx, y = ny}
+end
+
+local function generate_id(prefix)
+  return (prefix or "arrow") .. "-" .. tostring(math.random(100000, 999999))
+end
+
+local function arr_min(arr)
+  local m = arr[1]
+  for i = 2, #arr do
+    if arr[i] < m then m = arr[i] end
+  end
+  return m
+end
+
+local function arr_max(arr)
+  local m = arr[1]
+  for i = 2, #arr do
+    if arr[i] > m then m = arr[i] end
+  end
+  return m
+end
+
+--------------------------------------------------------------------------------
+-- Option Parsing
+--------------------------------------------------------------------------------
+
+local function parse_options(kwargs)
+  local opts = {}
+
+  -- Points
+  opts.from = parse_point(get_kwarg(kwargs, "from", ""))
+  opts.to = parse_point(get_kwarg(kwargs, "to", ""))
+  opts.control1 = parse_point(get_kwarg(kwargs, "control1", ""))
+  opts.control2 = parse_point(get_kwarg(kwargs, "control2", ""))
+
+  -- Styling
+  opts.color = get_kwarg(kwargs, "color", "black")
+  opts.width = get_kwarg_number(kwargs, "width", 2)
+  opts.size = get_kwarg_number(kwargs, "size", 10)
+
+  -- Line style (future: dash, dot, pattern)
+  opts.dash = get_kwarg(kwargs, "dash", nil)
+  opts.opacity = get_kwarg_number(kwargs, "opacity", 1)
+
+  -- Arrowhead options (future: multiple styles)
+  opts.head = get_kwarg(kwargs, "head", "arrow")
+  opts.head_start = get_kwarg_bool(kwargs, "head-start", false)
+  opts.head_end = get_kwarg_bool(kwargs, "head-end", true)
+
+  -- Positioning
+  opts.position = get_kwarg(kwargs, "position", nil)
+
+  -- Accessibility (future)
+  opts.aria_label = get_kwarg(kwargs, "aria-label", nil)
+  opts.alt = get_kwarg(kwargs, "alt", nil)
+  opts.css_class = get_kwarg(kwargs, "class", nil)
+
+  return opts
+end
+
+--------------------------------------------------------------------------------
+-- Bounding Box Calculation
+--------------------------------------------------------------------------------
+
+local function calculate_bounds(opts)
+  local padding = opts.size + 10
+  local all_x = {opts.from.x, opts.to.x}
+  local all_y = {opts.from.y, opts.to.y}
+
+  if opts.control1 then
+    table.insert(all_x, opts.control1.x)
+    table.insert(all_y, opts.control1.y)
+  end
+  if opts.control2 then
+    table.insert(all_x, opts.control2.x)
+    table.insert(all_y, opts.control2.y)
+  end
+
+  return {
+    min_x = arr_min(all_x) - padding,
+    max_x = arr_max(all_x) + padding,
+    min_y = arr_min(all_y) - padding,
+    max_y = arr_max(all_y) + padding
+  }
+end
+
+local function adjust_point(point, bounds)
+  if not point then return nil end
+  return {
+    x = point.x - bounds.min_x,
+    y = point.y - bounds.min_y
+  }
+end
+
+--------------------------------------------------------------------------------
+-- SVG Path Generation
+--------------------------------------------------------------------------------
+
+local function build_path(adj_from, adj_to, adj_c1, adj_c2)
+  if adj_c1 and adj_c2 then
+    -- Cubic Bezier
+    return string.format("M %.1f,%.1f C %.1f,%.1f %.1f,%.1f %.1f,%.1f",
+      adj_from.x, adj_from.y,
+      adj_c1.x, adj_c1.y,
+      adj_c2.x, adj_c2.y,
+      adj_to.x, adj_to.y)
+  elseif adj_c1 then
+    -- Quadratic Bezier
+    return string.format("M %.1f,%.1f Q %.1f,%.1f %.1f,%.1f",
+      adj_from.x, adj_from.y,
+      adj_c1.x, adj_c1.y,
+      adj_to.x, adj_to.y)
+  else
+    -- Straight line
+    return string.format("M %.1f,%.1f L %.1f,%.1f",
+      adj_from.x, adj_from.y,
+      adj_to.x, adj_to.y)
+  end
+end
+
+--------------------------------------------------------------------------------
+-- SVG Marker (Arrowhead) Generation
+--------------------------------------------------------------------------------
+
+-- Arrowhead path definitions by style
+local MARKER_PATHS = {
+  arrow = function(size)
+    -- Default filled triangle
+    return string.format("M 0 0 L %s %s L 0 %s z", size, size/2, size)
+  end,
+  -- Future styles will be added here:
+  -- open = function(size) ... end,
+  -- stealth = function(size) ... end,
+  -- diamond = function(size) ... end,
+  -- circle = function(size) ... end,
+  -- bar = function(size) ... end,
+}
+
+local function build_marker(id, opts)
+  local size = opts.size
+  local color = opts.color
+  local style = opts.head
+
+  -- Get path generator for style, default to arrow
+  local path_fn = MARKER_PATHS[style] or MARKER_PATHS.arrow
+  local path_d = path_fn(size)
+
+  return string.format(
+    '<marker id="%s" markerWidth="%s" markerHeight="%s" refX="%s" refY="%s" orient="auto-start-reverse" markerUnits="strokeWidth">' ..
+    '<path d="%s" fill="%s"/>' ..
+    '</marker>',
+    id, size, size, size, size/2,
+    path_d, color)
+end
+
+--------------------------------------------------------------------------------
+-- SVG Stroke Attributes
+--------------------------------------------------------------------------------
+
+local function build_stroke_attrs(opts)
+  local attrs = {
+    string.format('stroke="%s"', opts.color),
+    string.format('stroke-width="%s"', opts.width),
+    'fill="none"'
+  }
+
+  -- Dash pattern
+  if opts.dash then
+    if opts.dash == "true" then
+      table.insert(attrs, 'stroke-dasharray="5,5"')
+    else
+      table.insert(attrs, string.format('stroke-dasharray="%s"', opts.dash))
+    end
+  end
+
+  -- Opacity
+  if opts.opacity < 1 then
+    table.insert(attrs, string.format('stroke-opacity="%.2f"', opts.opacity))
+  end
+
+  return table.concat(attrs, " ")
+end
+
+--------------------------------------------------------------------------------
+-- SVG Assembly
+--------------------------------------------------------------------------------
+
+local function build_svg(opts, bounds, path_d, marker_id)
+  local svg_width = bounds.max_x - bounds.min_x
+  local svg_height = bounds.max_y - bounds.min_y
+
+  -- Build marker(s)
+  local markers = {}
+  if opts.head_end or opts.head_start then
+    table.insert(markers, build_marker(marker_id, opts))
+  end
+
+  -- Build defs section
+  local defs = ""
+  if #markers > 0 then
+    defs = "<defs>" .. table.concat(markers, "") .. "</defs>"
+  end
+
+  -- Build marker references
+  local marker_attrs = {}
+  if opts.head_end then
+    table.insert(marker_attrs, string.format('marker-end="url(#%s)"', marker_id))
+  end
+  if opts.head_start then
+    table.insert(marker_attrs, string.format('marker-start="url(#%s)"', marker_id))
+  end
+
+  -- Build stroke attributes
+  local stroke_attrs = build_stroke_attrs(opts)
+
+  -- Accessibility attributes
+  local a11y_attrs = {}
+  if opts.aria_label then
+    table.insert(a11y_attrs, string.format('aria-label="%s"', opts.aria_label))
+    table.insert(a11y_attrs, 'role="img"')
+  end
+
+  -- CSS class
+  local class_attr = ""
+  if opts.css_class then
+    class_attr = string.format(' class="%s"', opts.css_class)
+  end
+
+  return string.format(
+    '<svg width="%.1f" height="%.1f" viewBox="0 0 %.1f %.1f" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;"%s%s>%s<path d="%s" %s %s/></svg>',
+    svg_width, svg_height, svg_width, svg_height,
+    class_attr,
+    #a11y_attrs > 0 and (" " .. table.concat(a11y_attrs, " ")) or "",
+    defs,
+    path_d,
+    stroke_attrs,
+    table.concat(marker_attrs, " "))
+end
+
+--------------------------------------------------------------------------------
+-- HTML Output
+--------------------------------------------------------------------------------
+
+local function render_html(svg, opts, bounds)
+  local output
+  local is_positioned = opts.position == "fixed" or opts.position == "absolute"
+
+  if is_positioned then
+    output = string.format(
+      '<div style="position: %s; left: %.1fpx; top: %.1fpx; pointer-events: none; z-index: 9999;">%s</div>',
+      opts.position, bounds.min_x, bounds.min_y, svg)
+    return pandoc.RawBlock("html", output)
+  else
+    return pandoc.RawInline("html", svg)
+  end
+end
+
+--------------------------------------------------------------------------------
+-- Typst Output (placeholder for future implementation)
+--------------------------------------------------------------------------------
+
+local function render_typst(opts, bounds)
+  -- TODO: Implement native Typst path generation
+  -- For now, return a placeholder
+  return pandoc.RawInline("typst", "#text(fill: gray)[(arrow)]")
+end
+
+--------------------------------------------------------------------------------
+-- Main Shortcode Function
+--------------------------------------------------------------------------------
+
+function arrow(args, kwargs, meta, raw_args, context)
+  -- Parse all options
+  local opts = parse_options(kwargs)
+
+  -- Validate required arguments
+  if not opts.from or not opts.to then
+    quarto.log.error("Arrow shortcode requires 'from' and 'to' coordinates")
+    return pandoc.Str("[arrow: missing coordinates]")
+  end
+
+  -- Calculate bounding box
+  local bounds = calculate_bounds(opts)
+
+  -- Adjust coordinates relative to viewBox
+  local adj_from = adjust_point(opts.from, bounds)
+  local adj_to = adjust_point(opts.to, bounds)
+  local adj_c1 = adjust_point(opts.control1, bounds)
+  local adj_c2 = adjust_point(opts.control2, bounds)
+
+  -- Build SVG path
+  local path_d = build_path(adj_from, adj_to, adj_c1, adj_c2)
+
+  -- Generate unique marker ID
+  local marker_id = generate_id("arrow")
+
+  -- Build complete SVG
+  local svg = build_svg(opts, bounds, path_d, marker_id)
+
+  -- Return format-appropriate output
+  if quarto.doc.isFormat("html:js") then
+    return render_html(svg, opts, bounds)
+  elseif quarto.doc.isFormat("typst") then
+    return render_typst(opts, bounds)
+  elseif quarto.doc.isFormat("pdf") then
+    return pandoc.RawInline("html", svg)
+  else
+    return pandoc.Str("->")
+  end
+end
