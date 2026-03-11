@@ -5,22 +5,28 @@ filters:
   - arrow
 ---
 
-{{< arrow from="750,80" to="950,20" control1="900,100" color="hotpink" width="3" position="absolute" >}}
-
 ## Absolute Positioning
 
 Use `position="absolute"` to place arrows at specific document coordinates. The arrow scrolls with the page.
 
-Look at the top-right corner of this page to see a hotpink arrow!
-
 ```markdown
-{{</* arrow from="750,80" to="950,20" control1="900,100"
-    color="hotpink" width="3" position="absolute" */>}}
+{{</* arrow from="750,80" to="950,20" control1="900,100" color="hotpink" width="3" position="absolute" */>}}
 ```
+
+{{< arrow from="750,80" to="950,20" control1="900,100" color="hotpink" width="3" position="absolute" >}}
+
+Look at the top-right corner of this page to see a hotpink arrow!
 
 ## Scoped Positioning
 
 Use a `position: relative` container to scope absolute arrows.
+
+```markdown
+::: {style="position: relative; height: 200px;"}
+Content here...
+{{</* arrow from="50,50" to="300,150" control1="175,20" color="purple" position="absolute" */>}}
+:::
+```
 
 ::: {style="position: relative; height: 200px; border: 2px dashed #ccc; border-radius: 8px; padding: 1rem;"}
 
@@ -30,15 +36,19 @@ This box has `position: relative`, so the arrow is positioned within it.
 
 :::
 
+## Multiple Positioned Arrows
+
 ```markdown
-::: {style="position: relative; height: 200px;"}
-Content here...
-{{</* arrow from="50,50" to="300,150" control1="175,20"
-    color="purple" position="absolute" */>}}
-:::
+{{</* arrow from="30,40" to="150,40" color="red" position="absolute" */>}}
 ```
 
-## Multiple Positioned Arrows
+```markdown
+{{</* arrow from="30,80" to="200,120" control1="115,40" color="blue" position="absolute" */>}}
+```
+
+```markdown
+{{</* arrow from="30,120" to="250,180" control1="80,200" control2="200,100" color="green" position="absolute" */>}}
+```
 
 ::: {style="position: relative; height: 250px; border: 2px dashed #ccc; border-radius: 8px; padding: 1rem;"}
 
@@ -51,6 +61,14 @@ Combine multiple arrows for complex annotations.
 :::
 
 ## Annotations Example
+
+```markdown
+{{</* arrow from="400,30" to="280,50" control1="350,20" color="crimson" width="2" position="absolute" */>}}
+```
+
+```markdown
+{{</* arrow from="400,80" to="180,95" control1="300,120" color="steelblue" width="2" position="absolute" */>}}
+```
 
 ::: {style="position: relative; padding: 2rem; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;"}
 

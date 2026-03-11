@@ -9,15 +9,19 @@ filters:
 
 The default `head="arrow"` style is a filled triangle.
 
-{{< arrow from="50,30" to="250,30" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" */>}}
 ```
 
+{{< arrow from="50,30" to="250,30" >}}
+
 ## Arrowhead Styles
 
 ### Arrow (default)
+
+```markdown
+{{</* arrow from="50,30" to="250,30" head="arrow" */>}}
+```
 
 {{< arrow from="50,30" to="250,30" head="arrow" >}}
 
@@ -25,103 +29,111 @@ The default `head="arrow"` style is a filled triangle.
 
 Military-style pointed arrowhead.
 
-{{< arrow from="50,30" to="250,30" head="stealth" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" head="stealth" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head="stealth" >}}
 
 ### Diamond
 
 Diamond/rhombus shape.
 
-{{< arrow from="50,30" to="250,30" head="diamond" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" head="diamond" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head="diamond" >}}
 
 ### Circle / Dot
 
 Round endpoint.
 
-{{< arrow from="50,30" to="250,30" head="circle" >}}
-
-{{< arrow from="50,30" to="250,30" head="dot" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" head="circle" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head="circle" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" head="dot" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" head="dot" >}}
 
 ### Square
 
 Square endpoint.
 
-{{< arrow from="50,30" to="250,30" head="square" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" head="square" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head="square" >}}
 
 ### Bar / Stop
 
 Flat perpendicular line.
 
-{{< arrow from="50,30" to="250,30" head="bar" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" head="bar" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head="bar" >}}
 
 ### Barbed
 
 Hook-like, open arrow style.
 
-{{< arrow from="50,30" to="250,30" head="barbed" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" head="barbed" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head="barbed" >}}
 
 ### None
 
 No arrowhead at all.
 
-{{< arrow from="50,30" to="250,30" head="none" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" head="none" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head="none" >}}
 
 ## Arrowhead Placement
 
 ### End Only (default)
 
+```markdown
+{{</* arrow from="50,30" to="250,30" */>}}
+```
+
 {{< arrow from="50,30" to="250,30" >}}
 
 ### Start Only
-
-{{< arrow from="50,30" to="250,30" head-start="true" head-end="false" >}}
 
 ```markdown
 {{</* arrow from="50,30" to="250,30" head-start="true" head-end="false" */>}}
 ```
 
-### Both Ends
+{{< arrow from="50,30" to="250,30" head-start="true" head-end="false" >}}
 
-{{< arrow from="50,30" to="250,30" head-start="true" head-end="true" >}}
+### Both Ends
 
 ```markdown
 {{</* arrow from="50,30" to="250,30" head-start="true" head-end="true" */>}}
 ```
 
-### Neither End
+{{< arrow from="50,30" to="250,30" head-start="true" head-end="true" >}}
 
-{{< arrow from="50,30" to="250,30" head-start="false" head-end="false" >}}
+### Neither End
 
 ```markdown
 {{</* arrow from="50,30" to="250,30" head-start="false" head-end="false" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head-start="false" head-end="false" >}}
 
 ## Outline vs Filled
 
@@ -129,19 +141,31 @@ Use `head-fill="false"` for outline arrowheads.
 
 ### Filled (default)
 
+```markdown
+{{</* arrow from="50,30" to="250,30" head="arrow" head-fill="true" */>}}
+```
+
 {{< arrow from="50,30" to="250,30" head="arrow" head-fill="true" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" head="diamond" head-fill="true" */>}}
+```
 
 {{< arrow from="50,30" to="250,30" head="diamond" head-fill="true" >}}
 
 ### Outline
 
-{{< arrow from="50,30" to="250,30" head="arrow" head-fill="false" >}}
-
-{{< arrow from="50,30" to="250,30" head="diamond" head-fill="false" >}}
-
 ```markdown
 {{</* arrow from="50,30" to="250,30" head="arrow" head-fill="false" */>}}
 ```
+
+{{< arrow from="50,30" to="250,30" head="arrow" head-fill="false" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" head="diamond" head-fill="false" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" head="diamond" head-fill="false" >}}
 
 ## Combined with Curves
 
@@ -149,12 +173,24 @@ Arrowhead styles work with all curve types.
 
 ### Stealth with Quadratic Curve
 
+```markdown
+{{</* arrow from="50,50" to="250,50" control1="150,0" head="stealth" color="purple" */>}}
+```
+
 {{< arrow from="50,50" to="250,50" control1="150,0" head="stealth" color="purple" >}}
 
 ### Diamond with Cubic Curve
 
+```markdown
+{{</* arrow from="50,30" to="250,100" control1="100,0" control2="200,130" head="diamond" color="teal" */>}}
+```
+
 {{< arrow from="50,30" to="250,100" control1="100,0" control2="200,130" head="diamond" color="teal" >}}
 
 ### Both Ends with S-Curve
+
+```markdown
+{{</* arrow from="50,30" to="250,100" control1="100,0" control2="200,130" head="stealth" head-start="true" color="crimson" */>}}
+```
 
 {{< arrow from="50,30" to="250,100" control1="100,0" control2="200,130" head="stealth" head-start="true" color="crimson" >}}
