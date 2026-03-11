@@ -783,6 +783,169 @@ local function render_html(svg, opts, bounds)
 end
 
 --------------------------------------------------------------------------------
+-- LaTeX/TikZ Output for PDF
+--------------------------------------------------------------------------------
+
+local function render_latex(opts, adj_from, adj_to, adj_c1, adj_c2, adj_waypoints)
+  -- Convert color names to LaTeX-compatible format
+  local color = opts.color
+  -- Common color names work in both, but we could add a mapping if needed
+
+  -- Build arrow style options
+  local arrow_opts = {}
+
+  -- Line width (TikZ uses line width in pt)
+  table.insert(arrow_opts, string.format("line width=%.1fpt", opts.width))
+
+  -- Color
+  if color ~= "black" then
+    table.insert(arrow_opts, string.format("draw=%s", color))
+  end
+
+  -- Dash pattern
+  if opts.dash then
+    if opts.dash == "true" then
+      table.insert(arrow_opts, "dashed")
+    else
+      table.insert(arrow_opts, string.format("dash pattern=on %s off %s",
+        opts.dash:match("([^,]+)") or "5pt",
+        opts.dash:match(",([^,]+)") or "5pt"))
+    end
+  end
+
+  -- Line style
+  if opts.line == "dot" then
+    table.insert(arrow_opts, "dotted")
+  elseif opts.line == "double" then
+    table.insert(arrow_opts, "double")
+  elseif opts.line == "triple" then
+    -- TikZ doesn't have native triple, use double with extra distance
+    table.insert(arrow_opts, "double")
+    table.insert(arrow_opts, "double distance=2pt")
+  end
+
+  -- Opacity
+  if opts.opacity and opts.opacity < 1 then
+    table.insert(arrow_opts, string.format("opacity=%.2f", opts.opacity))
+  end
+
+  -- Arrowhead style using arrows.meta library
+  local arrow_tip = "Triangle"  -- Default filled triangle (matches SVG arrow style)
+  local arrow_tip_open = false  -- for unfilled arrowheads
+  if opts.head == "arrow" then
+    arrow_tip = "Triangle"
+  elseif opts.head == "stealth" then
+    arrow_tip = "Stealth"
+  elseif opts.head == "diamond" then
+    arrow_tip = "Diamond"
+  elseif opts.head == "circle" or opts.head == "dot" then
+    arrow_tip = "Circle"
+  elseif opts.head == "square" then
+    arrow_tip = "Square"
+  elseif opts.head == "bar" then
+    arrow_tip = "Bar[]"  -- Simple bar without size parameters
+  elseif opts.head == "barbed" then
+    arrow_tip = "Stealth"  -- Stealth with open is closest to barbed
+    arrow_tip_open = true
+  elseif opts.head == "none" then
+    arrow_tip = ""
+  end
+
+  -- Handle head-fill option (open/unfilled arrowheads)
+  if not opts.head_fill then
+    arrow_tip_open = true
+  end
+
+  -- Arrow head size (convert pixels to mm, roughly)
+  local head_size = opts.head_size or opts.size or 10
+  local head_size_mm = head_size * 0.3  -- rough conversion
+
+  -- Build arrow specification (TikZ arrows.meta syntax)
+  local arrow_spec = ""
+  if arrow_tip ~= "" then
+    local tip_with_size
+    -- Check if arrow_tip already has brackets (like "Bar[]")
+    if arrow_tip:match("%[") then
+      tip_with_size = "{" .. arrow_tip .. "}"
+    else
+      local tip_opts = string.format("length=%.1fmm", head_size_mm)
+      if arrow_tip_open then
+        tip_opts = tip_opts .. ", open"
+      end
+      tip_with_size = string.format("{%s[%s]}", arrow_tip, tip_opts)
+    end
+    local start_tip = opts.head_start and (tip_with_size .. "-") or "-"
+    local end_tip = opts.head_end and tip_with_size or ""
+    arrow_spec = start_tip .. end_tip
+    if arrow_spec ~= "-" then
+      table.insert(arrow_opts, arrow_spec)
+    end
+  end
+
+  -- Scale factor: convert pixels to cm (72 pixels per inch, 2.54 cm per inch)
+  -- Using a scale that makes typical arrows (200-300px) about 4-6cm wide
+  local scale = 0.02
+
+  -- Build the path
+  local path_cmd
+  if adj_waypoints and #adj_waypoints > 0 then
+    -- Path through waypoints
+    local points = {adj_from}
+    for _, wp in ipairs(adj_waypoints) do
+      table.insert(points, wp)
+    end
+    table.insert(points, adj_to)
+
+    if opts.smooth then
+      -- Smooth curve through points
+      local coords = {}
+      for _, p in ipairs(points) do
+        table.insert(coords, string.format("(%.2f,%.2f)", p.x * scale, -p.y * scale))
+      end
+      path_cmd = "plot [smooth, tension=0.5] coordinates {" .. table.concat(coords, " ") .. "}"
+    else
+      -- Straight line segments
+      local segments = {}
+      for i, p in ipairs(points) do
+        if i == 1 then
+          table.insert(segments, string.format("(%.2f,%.2f)", p.x * scale, -p.y * scale))
+        else
+          table.insert(segments, string.format("-- (%.2f,%.2f)", p.x * scale, -p.y * scale))
+        end
+      end
+      path_cmd = table.concat(segments, " ")
+    end
+  elseif adj_c1 and adj_c2 then
+    -- Cubic Bezier
+    path_cmd = string.format("(%.2f,%.2f) .. controls (%.2f,%.2f) and (%.2f,%.2f) .. (%.2f,%.2f)",
+      adj_from.x * scale, -adj_from.y * scale,
+      adj_c1.x * scale, -adj_c1.y * scale,
+      adj_c2.x * scale, -adj_c2.y * scale,
+      adj_to.x * scale, -adj_to.y * scale)
+  elseif adj_c1 then
+    -- Quadratic Bezier (approximate with cubic - same control point twice)
+    path_cmd = string.format("(%.2f,%.2f) .. controls (%.2f,%.2f) and (%.2f,%.2f) .. (%.2f,%.2f)",
+      adj_from.x * scale, -adj_from.y * scale,
+      adj_c1.x * scale, -adj_c1.y * scale,
+      adj_c1.x * scale, -adj_c1.y * scale,
+      adj_to.x * scale, -adj_to.y * scale)
+  else
+    -- Straight line
+    path_cmd = string.format("(%.2f,%.2f) -- (%.2f,%.2f)",
+      adj_from.x * scale, -adj_from.y * scale,
+      adj_to.x * scale, -adj_to.y * scale)
+  end
+
+  -- Build TikZ code
+  local tikz = string.format(
+    "\\begin{tikzpicture}\\draw[%s] %s;\\end{tikzpicture}",
+    table.concat(arrow_opts, ", "),
+    path_cmd)
+
+  return pandoc.RawInline("latex", tikz)
+end
+
+--------------------------------------------------------------------------------
 -- Typst Output (placeholder for future implementation)
 --------------------------------------------------------------------------------
 
@@ -854,8 +1017,8 @@ function arrow(args, kwargs, meta, raw_args, context)
     return render_html(svg, opts, bounds)
   elseif quarto.doc.isFormat("typst") then
     return render_typst(opts, bounds)
-  elseif quarto.doc.isFormat("pdf") then
-    return pandoc.RawInline("html", svg)
+  elseif quarto.doc.isFormat("pdf") or quarto.doc.isFormat("latex") then
+    return render_latex(opts, adj_from, adj_to, adj_c1, adj_c2, adj_waypoints)
   else
     return pandoc.Str("->")
   end

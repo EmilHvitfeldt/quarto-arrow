@@ -20,7 +20,6 @@
 
 ## Known Issues
 
-- **PDF output not working** - SVG arrows don't render in PDF. Needs TikZ or alternative backend.
 - **Percentage-based coordinates** - Implemented but arrows render off-screen due to `scrollWidth` vs `innerWidth` mismatch. See `docs/positioned-arrows-investigation.md` for details.
 
 ## Planned Features
@@ -85,7 +84,7 @@
 - [x] `fragment-duration="0.5"` - animation speed in seconds
 
 ### Format Support
-- [ ] PDF support (TikZ backend) - currently broken
+- [x] PDF support (TikZ backend)
 - [ ] DOCX support
 - [x] RevealJS presentation support
 

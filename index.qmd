@@ -207,10 +207,23 @@ Arrows work in RevealJS slides for visual presentations.
 | Format | Status | Notes |
 |--------|--------|-------|
 | HTML | Full support | All features available |
-| PDF | Basic support | Static arrows only |
+| PDF | Full support | Uses TikZ (see below) |
 | Typst | Placeholder | Coming soon |
-| RevealJS | Full support | Works in presentations |
+| RevealJS | Full support | Works with draw animations |
 | Other | Fallback | Renders as `->` text |
+
+### PDF Setup
+
+For PDF output, add TikZ to your document header:
+
+```yaml
+---
+format: pdf
+header-includes:
+  - \usepackage{tikz}
+  - \usetikzlibrary{arrows.meta}
+---
+```
 
 ## Links
 

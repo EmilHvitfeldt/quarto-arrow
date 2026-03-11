@@ -3,38 +3,129 @@ title: "Arrows in PDF"
 format: pdf
 filters:
   - arrow
+header-includes:
+  - \usepackage{tikz}
+  - \usetikzlibrary{arrows.meta}
 ---
 
 ## Basic Arrows
 
-Straight line arrow:
+Straight line:
 
 {{< arrow from="50,30" to="250,30" >}}
 
-## Curved Arrows
+## Curves
 
-Quadratic Bezier curve:
+Quadratic Bezier (control1):
 
 {{< arrow from="50,50" to="250,50" control1="150,0" >}}
 
-Cubic Bezier S-curve:
+Cubic Bezier (control1 + control2):
 
 {{< arrow from="50,30" to="250,100" control1="100,0" control2="200,130" >}}
 
-## Styled Arrows
+Simple curve parameter:
 
-Red arrow:
+{{< arrow from="50,50" to="250,50" curve="0.5" >}}
 
-{{< arrow from="50,30" to="250,30" color="red" >}}
+Curve with bend right:
 
-Thick blue arrow:
+{{< arrow from="50,50" to="250,50" curve="0.5" bend="right" >}}
 
-{{< arrow from="50,30" to="250,30" color="blue" width="4" >}}
+## Waypoints
 
-Dashed arrow:
+Smooth waypoints:
 
-{{< arrow from="50,30" to="250,30" dash="5,3" >}}
+{{< arrow from="30,50" to="270,50" waypoints="100,20; 150,80; 200,20" >}}
 
-## Notes
+Straight waypoints (smooth=false):
 
-PDF support renders static SVG arrows. Dynamic features like percentage-based coordinates are not available in PDF output.
+{{< arrow from="30,50" to="270,50" waypoints="100,20; 150,80; 200,20" smooth="false" >}}
+
+## Colors
+
+Red: {{< arrow from="50,30" to="200,30" color="red" >}}
+
+Blue: {{< arrow from="50,30" to="200,30" color="blue" >}}
+
+Green: {{< arrow from="50,30" to="200,30" color="green" >}}
+
+## Line Width
+
+Width 1: {{< arrow from="50,30" to="200,30" width="1" >}}
+
+Width 2 (default): {{< arrow from="50,30" to="200,30" width="2" >}}
+
+Width 4: {{< arrow from="50,30" to="200,30" width="4" >}}
+
+## Dash Patterns
+
+Dashed (true): {{< arrow from="50,30" to="200,30" dash="true" >}}
+
+Custom dash: {{< arrow from="50,30" to="200,30" dash="10,5" >}}
+
+## Line Styles
+
+Single (default): {{< arrow from="50,30" to="200,30" line="single" >}}
+
+Dotted: {{< arrow from="50,30" to="200,30" line="dot" >}}
+
+Double: {{< arrow from="50,30" to="200,30" line="double" >}}
+
+Triple: {{< arrow from="50,30" to="200,30" line="triple" >}}
+
+## Arrowhead Styles
+
+Arrow (default): {{< arrow from="50,30" to="200,30" head="arrow" >}}
+
+Stealth: {{< arrow from="50,30" to="200,30" head="stealth" >}}
+
+Diamond: {{< arrow from="50,30" to="200,30" head="diamond" >}}
+
+Circle: {{< arrow from="50,30" to="200,30" head="circle" >}}
+
+Square: {{< arrow from="50,30" to="200,30" head="square" >}}
+
+Bar: {{< arrow from="50,30" to="200,30" head="bar" >}}
+
+Barbed: {{< arrow from="50,30" to="200,30" head="barbed" >}}
+
+None: {{< arrow from="50,30" to="200,30" head="none" >}}
+
+## Arrowhead Placement
+
+End only (default): {{< arrow from="50,30" to="200,30" >}}
+
+Start only: {{< arrow from="50,30" to="200,30" head-start="true" head-end="false" >}}
+
+Both ends: {{< arrow from="50,30" to="200,30" head-start="true" head-end="true" >}}
+
+Neither: {{< arrow from="50,30" to="200,30" head-start="false" head-end="false" >}}
+
+## Head Size
+
+Small (5): {{< arrow from="50,30" to="200,30" head-size="5" >}}
+
+Default (10): {{< arrow from="50,30" to="200,30" >}}
+
+Large (20): {{< arrow from="50,30" to="200,30" head-size="20" >}}
+
+## Head Fill
+
+Filled (default): {{< arrow from="50,30" to="200,30" head="diamond" head-fill="true" >}}
+
+Outline: {{< arrow from="50,30" to="200,30" head="diamond" head-fill="false" >}}
+
+## Opacity
+
+Full opacity: {{< arrow from="50,30" to="200,30" >}}
+
+Half opacity: {{< arrow from="50,30" to="200,30" opacity="0.5" >}}
+
+## Combined Styles
+
+Red stealth, thick: {{< arrow from="50,30" to="200,30" color="red" head="stealth" width="3" >}}
+
+Blue dashed diamond: {{< arrow from="50,30" to="200,30" color="blue" dash="true" head="diamond" >}}
+
+Curved with style: {{< arrow from="50,50" to="250,50" curve="0.5" color="purple" head="stealth" width="2" >}}
