@@ -66,6 +66,15 @@ Dotted, double, and triple line patterns.
 
 <iframe src="examples/linestyles.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
+### Labels
+
+Add text labels to arrows with positioning options.
+
+[View Example](examples/labels.html){.btn .btn-primary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/labels.qmd){.btn .btn-secondary}
+
+<iframe src="examples/labels.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
+
 ### Positioned Arrows
 
 Absolute and fixed positioning for document-level annotations.
@@ -119,6 +128,9 @@ Arrows work in RevealJS slides for visual presentations.
 | `head-end` | `true` | Show arrowhead at end |
 | `head-fill` | `true` | Filled (`true`) or outline (`false`) |
 | `head-size` | `size` | Independent arrowhead size (overrides `size`) |
+| `label` | - | Text label for the arrow |
+| `label-position` | `"middle"` | Label position: `"start"`, `"middle"`, or `"end"` |
+| `label-offset` | `10` | Distance from the line (perpendicular) |
 
 ### Line Styles
 

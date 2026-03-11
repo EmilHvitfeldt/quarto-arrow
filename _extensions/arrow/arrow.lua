@@ -88,6 +88,11 @@ local function parse_options(kwargs)
   -- Positioning
   opts.position = get_kwarg(kwargs, "position", nil)
 
+  -- Label options
+  opts.label = get_kwarg(kwargs, "label", nil)
+  opts.label_position = get_kwarg(kwargs, "label-position", "middle")  -- start, middle, end
+  opts.label_offset = get_kwarg_number(kwargs, "label-offset", 10)
+
   -- Accessibility (future)
   opts.aria_label = get_kwarg(kwargs, "aria-label", nil)
   opts.alt = get_kwarg(kwargs, "alt", nil)
@@ -155,6 +160,92 @@ local function build_path(adj_from, adj_to, adj_c1, adj_c2)
       adj_from.x, adj_from.y,
       adj_to.x, adj_to.y)
   end
+end
+
+--------------------------------------------------------------------------------
+-- Label Position Calculation
+--------------------------------------------------------------------------------
+
+-- Linear interpolation
+local function lerp(a, b, t)
+  return a + (b - a) * t
+end
+
+-- Calculate point on quadratic Bezier at t (0-1)
+local function quadratic_bezier_point(p0, p1, p2, t)
+  local u = 1 - t
+  return {
+    x = u*u*p0.x + 2*u*t*p1.x + t*t*p2.x,
+    y = u*u*p0.y + 2*u*t*p1.y + t*t*p2.y
+  }
+end
+
+-- Calculate point on cubic Bezier at t (0-1)
+local function cubic_bezier_point(p0, p1, p2, p3, t)
+  local u = 1 - t
+  return {
+    x = u*u*u*p0.x + 3*u*u*t*p1.x + 3*u*t*t*p2.x + t*t*t*p3.x,
+    y = u*u*u*p0.y + 3*u*u*t*p1.y + 3*u*t*t*p2.y + t*t*t*p3.y
+  }
+end
+
+-- Calculate tangent angle at point on path
+local function calculate_tangent_angle(adj_from, adj_to, adj_c1, adj_c2, t)
+  local dx, dy
+  local epsilon = 0.001
+  local t1 = math.max(0, t - epsilon)
+  local t2 = math.min(1, t + epsilon)
+
+  if adj_c1 and adj_c2 then
+    local p1 = cubic_bezier_point(adj_from, adj_c1, adj_c2, adj_to, t1)
+    local p2 = cubic_bezier_point(adj_from, adj_c1, adj_c2, adj_to, t2)
+    dx = p2.x - p1.x
+    dy = p2.y - p1.y
+  elseif adj_c1 then
+    local p1 = quadratic_bezier_point(adj_from, adj_c1, adj_to, t1)
+    local p2 = quadratic_bezier_point(adj_from, adj_c1, adj_to, t2)
+    dx = p2.x - p1.x
+    dy = p2.y - p1.y
+  else
+    dx = adj_to.x - adj_from.x
+    dy = adj_to.y - adj_from.y
+  end
+
+  return math.atan(dy, dx)
+end
+
+-- Get label position and perpendicular offset
+local function get_label_position(adj_from, adj_to, adj_c1, adj_c2, position, offset)
+  local t
+  if position == "start" then
+    t = 0.15
+  elseif position == "end" then
+    t = 0.85
+  else
+    t = 0.5  -- middle (default)
+  end
+
+  local point
+  if adj_c1 and adj_c2 then
+    point = cubic_bezier_point(adj_from, adj_c1, adj_c2, adj_to, t)
+  elseif adj_c1 then
+    point = quadratic_bezier_point(adj_from, adj_c1, adj_to, t)
+  else
+    point = {
+      x = lerp(adj_from.x, adj_to.x, t),
+      y = lerp(adj_from.y, adj_to.y, t)
+    }
+  end
+
+  -- Calculate perpendicular offset (above the line)
+  local angle = calculate_tangent_angle(adj_from, adj_to, adj_c1, adj_c2, t)
+  local perp_angle = angle - math.pi / 2  -- perpendicular (above)
+
+  return {
+    x = point.x + offset * math.cos(perp_angle),
+    y = point.y + offset * math.sin(perp_angle),
+    angle = math.deg(angle)
+  }
 end
 
 --------------------------------------------------------------------------------
@@ -335,7 +426,7 @@ end
 -- SVG Assembly
 --------------------------------------------------------------------------------
 
-local function build_svg(opts, bounds, path_d, marker_id)
+local function build_svg(opts, bounds, path_d, marker_id, adj_from, adj_to, adj_c1, adj_c2)
   local svg_width = bounds.max_x - bounds.min_x
   local svg_height = bounds.max_y - bounds.min_y
 
@@ -421,13 +512,28 @@ local function build_svg(opts, bounds, path_d, marker_id)
       path_d, stroke_attrs, table.concat(marker_attrs, " "))
   end
 
+  -- Build label element
+  local label_content = ""
+  if opts.label and opts.label ~= "" then
+    local label_pos = get_label_position(adj_from, adj_to, adj_c1, adj_c2, opts.label_position, opts.label_offset)
+    -- Normalize angle to keep text readable (not upside down)
+    local angle = label_pos.angle
+    if angle > 90 or angle < -90 then
+      angle = angle + 180
+    end
+    label_content = string.format(
+      '<text x="%.1f" y="%.1f" text-anchor="middle" dominant-baseline="middle" fill="%s" font-size="12" font-family="sans-serif" transform="rotate(%.1f %.1f %.1f)">%s</text>',
+      label_pos.x, label_pos.y, opts.color, angle, label_pos.x, label_pos.y, opts.label)
+  end
+
   return string.format(
-    '<svg width="%.1f" height="%.1f" viewBox="0 0 %.1f %.1f" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;"%s%s>%s%s</svg>',
+    '<svg width="%.1f" height="%.1f" viewBox="0 0 %.1f %.1f" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;"%s%s>%s%s%s</svg>',
     svg_width, svg_height, svg_width, svg_height,
     class_attr,
     #a11y_attrs > 0 and (" " .. table.concat(a11y_attrs, " ")) or "",
     defs,
-    path_content)
+    path_content,
+    label_content)
 end
 
 --------------------------------------------------------------------------------
@@ -488,7 +594,7 @@ function arrow(args, kwargs, meta, raw_args, context)
   local marker_id = generate_id("arrow")
 
   -- Build complete SVG
-  local svg = build_svg(opts, bounds, path_d, marker_id)
+  local svg = build_svg(opts, bounds, path_d, marker_id, adj_from, adj_to, adj_c1, adj_c2)
 
   -- Return format-appropriate output
   if quarto.doc.isFormat("html:js") then

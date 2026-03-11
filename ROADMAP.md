@@ -70,9 +70,9 @@
 - [ ] High contrast mode support
 
 ### Labels
-- [ ] `label="text"` - text along the arrow
-- [ ] `label-position="start|middle|end"` - where to place label
-- [ ] `label-offset="10"` - distance from line
+- [x] `label="text"` - text along the arrow
+- [x] `label-position="start|middle|end"` - where to place label
+- [x] `label-offset="10"` - distance from line
 
 ### Advanced Curves
 - [ ] Multiple waypoints for complex paths
