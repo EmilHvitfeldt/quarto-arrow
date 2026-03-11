@@ -1,0 +1,118 @@
+---
+title: "Line Styles"
+format: html
+filters:
+  - arrow
+---
+
+## Single Line (default)
+
+```markdown
+{{</* arrow from="50,30" to="250,30" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" >}}
+
+## Dotted Line
+
+Use `line="dot"` for a dotted line pattern.
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="dot" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="dot" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="dot" width="3" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="dot" width="3" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="dot" color="blue" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="dot" color="blue" >}}
+
+## Double Line
+
+Use `line="double"` for a parallel double line.
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="double" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="double" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="double" width="2" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="double" width="2" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="double" color="red" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="double" color="red" >}}
+
+## Triple Line
+
+Use `line="triple"` for three parallel lines.
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="triple" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="triple" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="triple" width="2" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="triple" width="2" >}}
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="triple" color="purple" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="triple" color="purple" >}}
+
+## With Curves
+
+Line styles work with curved arrows too.
+
+### Dotted Curve
+
+```markdown
+{{</* arrow from="50,80" to="250,80" control1="150,20" line="dot" color="teal" */>}}
+```
+
+{{< arrow from="50,80" to="250,80" control1="150,20" line="dot" color="teal" >}}
+
+### Double Curve
+
+```markdown
+{{</* arrow from="50,80" to="250,80" control1="150,20" line="double" color="crimson" */>}}
+```
+
+{{< arrow from="50,80" to="250,80" control1="150,20" line="double" color="crimson" >}}
+
+### Triple S-Curve
+
+```markdown
+{{</* arrow from="50,30" to="250,130" control1="150,0" control2="150,160" line="triple" color="steelblue" */>}}
+```
+
+{{< arrow from="50,30" to="250,130" control1="150,0" control2="150,160" line="triple" color="steelblue" >}}
+
+## Combined with Dash
+
+You can combine `line="dot"` with `dash` patterns too, though dot takes precedence if both are set.
+
+```markdown
+{{</* arrow from="50,30" to="250,30" line="double" dash="true" */>}}
+```
+
+{{< arrow from="50,30" to="250,30" line="double" dash="true" >}}

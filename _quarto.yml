@@ -6,6 +6,7 @@ project:
     - examples/basic.qmd
     - examples/styling.qmd
     - examples/arrowheads.qmd
+    - examples/linestyles.qmd
     - examples/positioned.qmd
     - examples/revealjs.qmd
     - examples/pdf.qmd
@@ -24,6 +25,8 @@ website:
             text: Styling Options
           - href: examples/arrowheads.qmd
             text: Arrowhead Styles
+          - href: examples/linestyles.qmd
+            text: Line Styles
           - href: examples/positioned.qmd
             text: Positioned Arrows
           - href: examples/revealjs.qmd

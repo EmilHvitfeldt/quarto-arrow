@@ -43,13 +43,11 @@
 ### Line Styles
 - [x] `dash="true"` or `dash="5,3"` - dashed lines
 - [x] `opacity="0.5"` - line transparency
-- [ ] `dot="true"` - dotted lines (shorthand for small dash)
-- [ ] Custom patterns via `pattern="..."`:
-  - [ ] `wavy` - sine wave pattern
-  - [ ] `zigzag` - angular wave pattern
-  - [ ] `double` - parallel double line
-  - [ ] `triple` - parallel triple line
-  - [ ] Custom SVG pattern reference
+- [x] `line="dot"` - dotted lines
+- [x] `line="double"` - parallel double line
+- [x] `line="triple"` - parallel triple line
+
+**Not planned:** `wavy`, `zigzag`, custom SVG patterns (too complex - requires path transformation)
 
 ### Convenience & Shortcuts
 - [ ] `direction="up|down|left|right"` - auto-calculate curve based on direction

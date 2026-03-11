@@ -73,8 +73,9 @@ local function parse_options(kwargs)
   opts.width = get_kwarg_number(kwargs, "width", 2)
   opts.size = get_kwarg_number(kwargs, "size", 10)
 
-  -- Line style (future: dash, dot, pattern)
+  -- Line style
   opts.dash = get_kwarg(kwargs, "dash", nil)
+  opts.line = get_kwarg(kwargs, "line", "single")  -- single, dot, double, triple
   opts.opacity = get_kwarg_number(kwargs, "opacity", 1)
 
   -- Arrowhead options
@@ -293,10 +294,13 @@ end
 -- SVG Stroke Attributes
 --------------------------------------------------------------------------------
 
-local function build_stroke_attrs(opts)
+local function build_stroke_attrs(opts, override_width, override_color)
+  local width = override_width or opts.width
+  local color = override_color or opts.color
+
   local attrs = {
-    string.format('stroke="%s"', opts.color),
-    string.format('stroke-width="%s"', opts.width),
+    string.format('stroke="%s"', color),
+    string.format('stroke-width="%s"', width),
     'fill="none"'
   }
 
@@ -307,6 +311,14 @@ local function build_stroke_attrs(opts)
     else
       table.insert(attrs, string.format('stroke-dasharray="%s"', opts.dash))
     end
+  end
+
+  -- Dot pattern (small dots)
+  if opts.line == "dot" and not opts.dash then
+    local dot_size = math.max(1, width * 0.5)
+    local gap_size = width * 2
+    table.insert(attrs, string.format('stroke-dasharray="%.1f,%.1f"', dot_size, gap_size))
+    table.insert(attrs, 'stroke-linecap="round"')
   end
 
   -- Opacity
@@ -349,8 +361,36 @@ local function build_svg(opts, bounds, path_d, marker_id)
     end
   end
 
-  -- Build stroke attributes
+  -- Build path elements based on line style
+  local paths = {}
   local stroke_attrs = build_stroke_attrs(opts)
+
+  if opts.line == "double" then
+    -- Double line: thick outer stroke + thin white gap in middle
+    local outer_width = opts.width * 3
+    local gap_width = opts.width
+    local outer_attrs = build_stroke_attrs(opts, outer_width, opts.color)
+    local gap_attrs = build_stroke_attrs(opts, gap_width, "white")
+    -- Outer stroke (no markers)
+    table.insert(paths, string.format('<path d="%s" %s/>', path_d, outer_attrs))
+    -- Gap stroke (no markers)
+    table.insert(paths, string.format('<path d="%s" %s/>', path_d, gap_attrs))
+  elseif opts.line == "triple" then
+    -- Triple line: thick outer + two gaps
+    local outer_width = opts.width * 5
+    local gap_width = opts.width
+    local outer_attrs = build_stroke_attrs(opts, outer_width, opts.color)
+    local gap_attrs = build_stroke_attrs(opts, gap_width, "white")
+    -- Outer stroke
+    table.insert(paths, string.format('<path d="%s" %s/>', path_d, outer_attrs))
+    -- Two gap strokes at different positions (simulated with single wider gap)
+    local inner_gap_width = opts.width * 3
+    local inner_gap_attrs = build_stroke_attrs(opts, inner_gap_width, "white")
+    table.insert(paths, string.format('<path d="%s" %s/>', path_d, inner_gap_attrs))
+    -- Center line
+    local center_attrs = build_stroke_attrs(opts, gap_width, opts.color)
+    table.insert(paths, string.format('<path d="%s" %s/>', path_d, center_attrs))
+  end
 
   -- Accessibility attributes
   local a11y_attrs = {}
@@ -365,15 +405,27 @@ local function build_svg(opts, bounds, path_d, marker_id)
     class_attr = string.format(' class="%s"', opts.css_class)
   end
 
+  -- Build path content
+  local path_content
+  if #paths > 0 then
+    -- Multiple paths for double/triple lines
+    -- Add markers only to the final (topmost) path
+    local final_path = paths[#paths]
+    paths[#paths] = final_path:gsub('/>$', ' ' .. table.concat(marker_attrs, " ") .. '/>')
+    path_content = table.concat(paths, "")
+  else
+    -- Single path (default, dot, etc.)
+    path_content = string.format('<path d="%s" %s %s/>',
+      path_d, stroke_attrs, table.concat(marker_attrs, " "))
+  end
+
   return string.format(
-    '<svg width="%.1f" height="%.1f" viewBox="0 0 %.1f %.1f" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;"%s%s>%s<path d="%s" %s %s/></svg>',
+    '<svg width="%.1f" height="%.1f" viewBox="0 0 %.1f %.1f" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;"%s%s>%s%s</svg>',
     svg_width, svg_height, svg_width, svg_height,
     class_attr,
     #a11y_attrs > 0 and (" " .. table.concat(a11y_attrs, " ")) or "",
     defs,
-    path_d,
-    stroke_attrs,
-    table.concat(marker_attrs, " "))
+    path_content)
 end
 
 --------------------------------------------------------------------------------

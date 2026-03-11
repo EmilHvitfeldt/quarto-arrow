@@ -57,6 +57,15 @@ Multiple arrowhead styles: arrow, stealth, diamond, circle, square, bar, barbed,
 
 <iframe src="examples/arrowheads.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
+### Line Styles
+
+Dotted, double, and triple line patterns.
+
+[View Example](examples/linestyles.html){.btn .btn-primary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/linestyles.qmd){.btn .btn-secondary}
+
+<iframe src="examples/linestyles.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
+
 ### Positioned Arrows
 
 Absolute and fixed positioning for document-level annotations.
@@ -102,12 +111,22 @@ Arrows work in RevealJS slides for visual presentations.
 | `width` | `2` | Stroke width in pixels |
 | `size` | `10` | Arrowhead size |
 | `dash` | - | Dash pattern (e.g., `"5,5"` or `"true"`) |
+| `line` | `"single"` | Line style (see below) |
 | `opacity` | `1` | Stroke opacity (0-1) |
 | `position` | - | `"absolute"` or `"fixed"` |
 | `head` | `"arrow"` | Arrowhead style (see below) |
 | `head-start` | `false` | Show arrowhead at start |
 | `head-end` | `true` | Show arrowhead at end |
 | `head-fill` | `true` | Filled (`true`) or outline (`false`) |
+
+### Line Styles
+
+| Style | Description |
+|-------|-------------|
+| `single` | Default single line |
+| `dot` | Dotted line pattern |
+| `double` | Parallel double line |
+| `triple` | Three parallel lines |
 
 ### Arrowhead Styles
 
