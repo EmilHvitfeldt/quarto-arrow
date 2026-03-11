@@ -247,6 +247,10 @@ format: typst
 ---
 ```
 
+## See Also
+
+- [quarto-leader-line](https://github.com/ofkoru/quarto-leader-line) - Draw arrows between HTML elements using LeaderLine.js
+
 ## Links
 
 - [GitHub Repository](https://github.com/emilhvitfeldt/quarto-arrow)
