@@ -46,13 +46,13 @@ Larger arrowhead:
 Use `position="absolute"` for document-level positioning (scrolls with page):
 
 ```markdown
-{{< arrow from="600,80" to="780,15" control1="750,100" position="absolute" >}}
+{{</* arrow from="600,80" to="780,15" control1="750,100" position="absolute" */>}}
 ```
 
 Use `position="fixed"` for viewport-fixed positioning (stays in place while scrolling):
 
 ```markdown
-{{< arrow from="100,100" to="300,50" position="fixed" >}}
+{{</* arrow from="100,100" to="300,50" position="fixed" */>}}
 ```
 
 Use `position="absolute"` inside a `position: relative` container for scoped positioning:

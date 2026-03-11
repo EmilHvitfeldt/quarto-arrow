@@ -8,6 +8,8 @@
 local function get_kwarg(kwargs, key, default)
   local val = kwargs[key] and pandoc.utils.stringify(kwargs[key]) or nil
   if val and val ~= "" then
+    -- Strip surrounding quotes if present
+    val = val:match('^"(.*)"$') or val:match("^'(.*)'$") or val
     return val
   end
   return default

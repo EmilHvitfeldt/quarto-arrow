@@ -15,24 +15,10 @@
 - [x] HTML format support
 - [x] Basic PDF support
 - [x] Text fallback for other formats
-
-## Priority / Up Next
-
-### Percentage-Based Coordinates
-Hardcoded pixel coordinates don't adapt to different screen sizes. Percentage units allow responsive arrows.
-
-- [ ] `from="75%,50"` - x as percentage of container width, y in pixels
-- [ ] `to="100%,0"` - point to exact corner
-- [ ] `control1="90%,80"` - control points also support percentages
-- [ ] Mixed units: `from="50%,100"` (x=50% of width, y=100px)
-- [ ] Viewport units: `from="50vw,10vh"` for fixed-position arrows
-
-**Implementation notes:**
-- For `position="absolute"`: percentages relative to document/body width
-- For `position="fixed"`: percentages relative to viewport
-- For inline: percentages relative to parent container
-- Requires JavaScript to resolve percentages at render time (HTML only)
-- PDF/Typst fallback: convert to absolute units based on page size
+- [x] Percentage-based coordinates (`from="75%,100"`)
+- [x] Viewport units (`from="50vw,10vh"`)
+- [x] Mixed units (`from="50%,100"` - percentage x, pixel y)
+- [x] Auto-resize on window resize (JS-based for dynamic units)
 
 ## Planned Features
 
