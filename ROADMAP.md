@@ -79,10 +79,10 @@
 - [ ] Arc segments (circular curves)
 - [x] Auto-curve based on distance/direction (`curve` + `bend` parameters)
 
-### Animation (HTML only)
-- [ ] `animate="true"` - draw animation on load
-- [ ] `animate-duration="1s"` - animation speed
-- [ ] `animate-delay="0.5s"` - start delay
+### Animation (RevealJS)
+- [x] `fragment="true"` - draw animation as RevealJS fragment
+- [x] `fragment-index="N"` - control fragment order
+- [x] `fragment-duration="0.5"` - animation speed in seconds
 
 ### Format Support
 - [ ] PDF support (TikZ backend) - currently broken

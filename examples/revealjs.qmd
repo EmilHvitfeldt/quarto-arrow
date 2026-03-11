@@ -44,3 +44,57 @@ Some important content that needs visual emphasis.
 {{< arrow from="400,50" to="250,80" control1="350,30" color="crimson" width="2" position="absolute" >}}
 
 :::
+
+## Draw Animation
+
+Arrows animate as they are drawn when using `fragment="true"`.
+
+{{< arrow from="100,200" to="400,200" fragment="true" >}}
+
+{{< arrow from="100,280" to="400,280" color="blue" fragment="true" >}}
+
+{{< arrow from="100,360" to="400,360" color="green" fragment="true" >}}
+
+## Animation Speed
+
+Control draw speed with `fragment-duration` (seconds).
+
+{{< arrow from="100,200" to="400,200" fragment="true" fragment-duration="0.3" >}}
+
+Fast (0.3s)
+
+{{< arrow from="100,300" to="400,300" color="purple" fragment="true" fragment-duration="1" >}}
+
+Slow (1s)
+
+## Fragment Order
+
+Control the order with `fragment-index`.
+
+{{< arrow from="100,350" to="400,350" color="red" fragment="true" fragment-index="3" >}}
+
+Third (red)
+
+{{< arrow from="100,280" to="400,280" color="blue" fragment="true" fragment-index="2" >}}
+
+Second (blue)
+
+{{< arrow from="100,200" to="400,200" color="green" fragment="true" fragment-index="1" >}}
+
+First (green)
+
+## Curved Draw Animation
+
+Draw animation works with curves too.
+
+{{< arrow from="100,200" to="400,200" curve="0.5" fragment="true" color="crimson" >}}
+
+{{< arrow from="100,300" to="400,300" curve="0.5" bend="right" fragment="true" color="teal" >}}
+
+## Step-by-Step Diagram
+
+::: {style="position: relative; height: 300px;"}
+
+Start → {{< arrow from="80,50" to="180,50" fragment="true" fragment-index="1" >}} Step 1 → {{< arrow from="220,50" to="320,50" fragment="true" fragment-index="2" >}} Step 2 → {{< arrow from="360,50" to="460,50" fragment="true" fragment-index="3" >}} Done!
+
+:::

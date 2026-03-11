@@ -144,6 +144,9 @@ Arrows work in RevealJS slides for visual presentations.
 | `label` | - | Text label for the arrow |
 | `label-position` | `"middle"` | Label position: `"start"`, `"middle"`, or `"end"` |
 | `label-offset` | `10` | Distance from the line (perpendicular) |
+| `fragment` | - | RevealJS fragment with draw animation (`"true"`) |
+| `fragment-index` | - | RevealJS fragment order (number) |
+| `fragment-duration` | `0.5` | Draw animation duration in seconds |
 
 ### Line Styles
 

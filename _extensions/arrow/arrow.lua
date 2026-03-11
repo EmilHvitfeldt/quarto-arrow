@@ -109,6 +109,11 @@ local function parse_options(kwargs)
   -- Positioning
   opts.position = get_kwarg(kwargs, "position", nil)
 
+  -- RevealJS fragment options
+  opts.fragment = get_kwarg(kwargs, "fragment", nil)  -- true or "draw" for draw animation
+  opts.fragment_index = get_kwarg_number(kwargs, "fragment-index", nil)
+  opts.fragment_duration = get_kwarg_number(kwargs, "fragment-duration", 0.5)  -- animation duration in seconds
+
   -- Label options
   opts.label = get_kwarg(kwargs, "label", nil)
   opts.label_position = get_kwarg(kwargs, "label-position", "middle")  -- start, middle, end
@@ -488,7 +493,7 @@ local MARKER_STYLES = {
   end,
 }
 
-local function build_marker(id, opts)
+local function build_marker(id, opts, anim_class)
   local size = opts.head_size or opts.size  -- Use head-size if provided, otherwise size
   local color = opts.color
   local style = opts.head
@@ -512,11 +517,17 @@ local function build_marker(id, opts)
     path_attrs = string.format('fill="%s"', color)
   end
 
+  -- Add animation class if specified
+  local class_attr = ""
+  if anim_class then
+    class_attr = string.format(' class="%s-marker"', anim_class)
+  end
+
   return string.format(
     '<marker id="%s" markerWidth="%s" markerHeight="%s" refX="%s" refY="%s" orient="auto-start-reverse" markerUnits="strokeWidth">' ..
-    '<path d="%s" %s/>' ..
+    '<path%s d="%s" %s/>' ..
     '</marker>',
-    id, marker.width, marker.height, marker.refX, marker.refY,
+    id, marker.width, marker.height, marker.refX, marker.refY, class_attr,
     marker.path, path_attrs)
 end
 
@@ -567,11 +578,18 @@ local function build_svg(opts, bounds, path_d, marker_id, adj_from, adj_to, adj_
   local svg_width = bounds.max_x - bounds.min_x
   local svg_height = bounds.max_y - bounds.min_y
 
+  -- Generate unique ID for animation (used for path and marker classes)
+  local anim_id = nil
+  if opts.fragment then
+    anim_id = generate_id("arrow-anim")
+    opts._anim_id = anim_id  -- Store for render_html
+  end
+
   -- Build marker(s) - skip if head="none"
   local markers = {}
   local has_markers = (opts.head_end or opts.head_start) and opts.head ~= "none"
   if has_markers then
-    table.insert(markers, build_marker(marker_id, opts))
+    table.insert(markers, build_marker(marker_id, opts, anim_id))
   end
 
   -- Build defs section
@@ -635,18 +653,24 @@ local function build_svg(opts, bounds, path_d, marker_id, adj_from, adj_to, adj_
     class_attr = string.format(' class="%s"', opts.css_class)
   end
 
-  -- Build path content
+  -- Build path content with optional animation class
   local path_content
+  local path_anim_class = ""
+  if anim_id then
+    path_anim_class = string.format(' class="%s-path"', anim_id)
+  end
+
   if #paths > 0 then
     -- Multiple paths for double/triple lines
-    -- Add markers only to the final (topmost) path
+    -- Add markers and animation class only to the final (topmost) path
     local final_path = paths[#paths]
-    paths[#paths] = final_path:gsub('/>$', ' ' .. table.concat(marker_attrs, " ") .. '/>')
+    paths[#paths] = final_path:gsub('<path ', '<path' .. path_anim_class .. ' ')
+    paths[#paths] = paths[#paths]:gsub('/>$', ' ' .. table.concat(marker_attrs, " ") .. '/>')
     path_content = table.concat(paths, "")
   else
     -- Single path (default, dot, etc.)
-    path_content = string.format('<path d="%s" %s %s/>',
-      path_d, stroke_attrs, table.concat(marker_attrs, " "))
+    path_content = string.format('<path%s d="%s" %s %s/>',
+      path_anim_class, path_d, stroke_attrs, table.concat(marker_attrs, " "))
   end
 
   -- Build label element
@@ -681,13 +705,57 @@ local function render_html(svg, opts, bounds)
   local output
   local is_positioned = opts.position == "fixed" or opts.position == "absolute"
 
+  -- Build fragment wrapper and animation styles if specified (for RevealJS)
+  local fragment_wrap_start = ""
+  local fragment_wrap_end = ""
+  local anim_style = ""
+
+  if opts.fragment then
+    local fragment_class = "fragment custom"
+    local index_attr = ""
+    if opts.fragment_index then
+      index_attr = string.format(' data-fragment-index="%d"', opts.fragment_index)
+    end
+    fragment_wrap_start = string.format('<span class="%s"%s>', fragment_class, index_attr)
+    fragment_wrap_end = '</span>'
+
+    -- CSS for draw animation - path starts hidden, animates when .visible is added
+    -- Marker also starts hidden and fades in at the end
+    local duration = opts.fragment_duration or 0.5
+    local anim_id = opts._anim_id or "arrow-anim"
+    anim_style = string.format([[
+<style>
+.%s-path {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+}
+.%s-marker {
+  opacity: 0;
+}
+.fragment.visible .%s-path {
+  animation: %s-draw %.2fs ease forwards;
+}
+.fragment.visible .%s-marker {
+  animation: %s-marker-appear 0.1s ease forwards;
+  animation-delay: 0.05s;
+}
+@keyframes %s-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes %s-marker-appear {
+  to { opacity: 1; }
+}
+</style>]], anim_id, anim_id, anim_id, anim_id, duration, anim_id, anim_id, anim_id, anim_id)
+  end
+
   if is_positioned then
     output = string.format(
-      '<div style="position: %s; left: %.1fpx; top: %.1fpx; pointer-events: none; z-index: 9999;">%s</div>',
-      opts.position, bounds.min_x, bounds.min_y, svg)
+      '%s%s<div style="position: %s; left: %.1fpx; top: %.1fpx; pointer-events: none; z-index: 9999;">%s</div>%s',
+      anim_style, fragment_wrap_start, opts.position, bounds.min_x, bounds.min_y, svg, fragment_wrap_end)
     return pandoc.RawBlock("html", output)
   else
-    return pandoc.RawInline("html", svg)
+    output = string.format('%s%s%s%s', anim_style, fragment_wrap_start, svg, fragment_wrap_end)
+    return pandoc.RawInline("html", output)
   end
 end
 
