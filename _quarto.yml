@@ -15,7 +15,7 @@ project:
     - examples/typst.qmd
 
 website:
-  title: "quarto-arrow"
+  title: "quarto-arrows"
   navbar:
     left:
       - href: index.qmd

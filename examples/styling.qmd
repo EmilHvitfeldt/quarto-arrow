@@ -2,7 +2,7 @@
 title: "Styling Options"
 format: html
 filters:
-  - arrow
+  - arrows
 ---
 
 ## Colors

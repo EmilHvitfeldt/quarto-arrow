@@ -2,7 +2,7 @@
 title: "Line Styles"
 format: html
 filters:
-  - arrow
+  - arrows
 ---
 
 ## Single Line (default)

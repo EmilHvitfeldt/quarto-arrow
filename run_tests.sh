@@ -3,7 +3,7 @@
 
 cd "$(dirname "$0")/tests" || exit 1
 
-echo "Running arrow extension tests..."
+echo "Running arrows extension tests..."
 echo ""
 
 # Try different lua interpreters in order of preference

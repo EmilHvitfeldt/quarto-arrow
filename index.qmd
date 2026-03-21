@@ -1,5 +1,5 @@
 ---
-title: "quarto-arrow"
+title: "quarto-arrows"
 subtitle: "Draw curved SVG arrows in Quarto documents"
 ---
 A Quarto extension for drawing arrows with Bezier curves. Perfect for annotations, callouts, and visual explanations.
@@ -7,7 +7,7 @@ A Quarto extension for drawing arrows with Bezier curves. Perfect for annotation
 ## Installation
 
 ```bash
-quarto add emilhvitfeldt/quarto-arrow
+quarto add emilhvitfeldt/quarto-arrows
 ```
 
 ## Quick Start
@@ -19,7 +19,7 @@ Add the filter to your YAML header:
 title: My Document
 format: html
 filters:
-  - arrow
+  - arrows
 ---
 ```
 
@@ -35,7 +35,7 @@ Then use the shortcode:
 Straight lines, quadratic curves, and cubic Bezier curves.
 
 [View Example](examples/basic.html){.btn .btn-primary}
-[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/basic.qmd){.btn .btn-secondary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrows/blob/main/examples/basic.qmd){.btn .btn-secondary}
 
 <iframe src="examples/basic.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
@@ -44,7 +44,7 @@ Straight lines, quadratic curves, and cubic Bezier curves.
 Colors, stroke widths, dash patterns, and arrowhead sizes.
 
 [View Example](examples/styling.html){.btn .btn-primary}
-[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/styling.qmd){.btn .btn-secondary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrows/blob/main/examples/styling.qmd){.btn .btn-secondary}
 
 <iframe src="examples/styling.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
@@ -53,7 +53,7 @@ Colors, stroke widths, dash patterns, and arrowhead sizes.
 Multiple arrowhead styles: arrow, stealth, diamond, circle, square, bar, barbed, and none.
 
 [View Example](examples/arrowheads.html){.btn .btn-primary}
-[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/arrowheads.qmd){.btn .btn-secondary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrows/blob/main/examples/arrowheads.qmd){.btn .btn-secondary}
 
 <iframe src="examples/arrowheads.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
@@ -62,7 +62,7 @@ Multiple arrowhead styles: arrow, stealth, diamond, circle, square, bar, barbed,
 Dotted, double, and triple line patterns.
 
 [View Example](examples/linestyles.html){.btn .btn-primary}
-[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/linestyles.qmd){.btn .btn-secondary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrows/blob/main/examples/linestyles.qmd){.btn .btn-secondary}
 
 <iframe src="examples/linestyles.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
@@ -71,7 +71,7 @@ Dotted, double, and triple line patterns.
 Add text labels to arrows with positioning options.
 
 [View Example](examples/labels.html){.btn .btn-primary}
-[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/labels.qmd){.btn .btn-secondary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrows/blob/main/examples/labels.qmd){.btn .btn-secondary}
 
 <iframe src="examples/labels.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
@@ -80,7 +80,7 @@ Add text labels to arrows with positioning options.
 Simple curve parameter instead of manual control points.
 
 [View Example](examples/curves.html){.btn .btn-primary}
-[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/curves.qmd){.btn .btn-secondary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrows/blob/main/examples/curves.qmd){.btn .btn-secondary}
 
 <iframe src="examples/curves.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
@@ -89,7 +89,7 @@ Simple curve parameter instead of manual control points.
 Absolute and fixed positioning for document-level annotations.
 
 [View Example](examples/positioned.html){.btn .btn-primary}
-[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/positioned.qmd){.btn .btn-secondary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrows/blob/main/examples/positioned.qmd){.btn .btn-secondary}
 
 <iframe src="examples/positioned.html" width="100%" height="400" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
@@ -98,7 +98,7 @@ Absolute and fixed positioning for document-level annotations.
 Arrows work in RevealJS slides with draw animations that reveal arrows step-by-step.
 
 [View Example](examples/revealjs.html){.btn .btn-primary}
-[Source Code](https://github.com/emilhvitfeldt/quarto-arrow/blob/main/examples/revealjs.qmd){.btn .btn-secondary}
+[Source Code](https://github.com/emilhvitfeldt/quarto-arrows/blob/main/examples/revealjs.qmd){.btn .btn-secondary}
 
 <iframe src="examples/revealjs.html" width="100%" height="500" style="border: 1px solid #ccc; border-radius: 4px;"></iframe>
 
@@ -253,5 +253,5 @@ format: typst
 
 ## Links
 
-- [GitHub Repository](https://github.com/emilhvitfeldt/quarto-arrow)
-- [Report Issues](https://github.com/emilhvitfeldt/quarto-arrow/issues)
+- [GitHub Repository](https://github.com/emilhvitfeldt/quarto-arrows)
+- [Report Issues](https://github.com/emilhvitfeldt/quarto-arrows/issues)

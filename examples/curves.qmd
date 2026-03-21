@@ -2,7 +2,7 @@
 title: "Advanced Curves"
 format: html
 filters:
-  - arrow
+  - arrows
 ---
 
 ## Simple Curve Parameter

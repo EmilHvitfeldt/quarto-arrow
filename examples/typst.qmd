@@ -2,7 +2,7 @@
 title: "Arrows in Typst"
 format: typst
 filters:
-  - arrow
+  - arrows
 ---
 
 ## Basic Arrows

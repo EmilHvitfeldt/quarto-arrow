@@ -2,7 +2,7 @@
 title: "Labels"
 format: html
 filters:
-  - arrow
+  - arrows
 ---
 
 ## Basic Label

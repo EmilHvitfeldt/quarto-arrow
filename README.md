@@ -1,11 +1,11 @@
-# quarto-arrow
+# quarto-arrows
 
 A Quarto extension for drawing arrows with Bezier curves. Supports HTML, PDF, Typst, and RevealJS.
 
 ## Installation
 
 ```bash
-quarto add emilhvitfeldt/quarto-arrow
+quarto add emilhvitfeldt/quarto-arrows
 ```
 
 ## Usage
@@ -17,7 +17,7 @@ Add the filter to your document:
 title: My Document
 format: html
 filters:
-  - arrow
+  - arrows
 ---
 ```
 
@@ -70,7 +70,7 @@ Draw arrows with the shortcode:
 
 ## Documentation
 
-Full documentation with interactive examples: **[quarto-arrow website](https://emilhvitfeldt.github.io/quarto-arrow/)**
+Full documentation with interactive examples: **[quarto-arrows website](https://emilhvitfeldt.github.io/quarto-arrows/)**
 
 ## License
 

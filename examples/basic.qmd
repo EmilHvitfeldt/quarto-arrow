@@ -2,7 +2,7 @@
 title: "Basic Arrows"
 format: html
 filters:
-  - arrow
+  - arrows
 ---
 
 ## Straight Lines

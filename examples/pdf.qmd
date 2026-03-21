@@ -2,7 +2,7 @@
 title: "Arrows in PDF"
 format: pdf
 filters:
-  - arrow
+  - arrows
 header-includes:
   - \usepackage{tikz}
   - \usetikzlibrary{arrows.meta}

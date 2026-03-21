@@ -2,7 +2,7 @@
 title: "Arrows in RevealJS"
 format: revealjs
 filters:
-  - arrow
+  - arrows
 ---
 
 ## Basic Arrow
