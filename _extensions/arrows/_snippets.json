@@ -1,0 +1,17 @@
+{
+  "arrow:basic": {
+    "prefix": "arrow:basic",
+    "description": "Simple straight arrow between two points.",
+    "body": "{{< arrow from=\"${1:50,50}\" to=\"${2:250,50}\" >}}"
+  },
+  "arrow:curved": {
+    "prefix": "arrow:curved",
+    "description": "Curved arrow with color and arrowhead style.",
+    "body": "{{< arrow from=\"${1:50,50}\" to=\"${2:250,50}\" curve=\"${3:0.5}\" color=\"${4:blue}\" head=\"${5:stealth}\" >}}"
+  },
+  "arrow:labeled": {
+    "prefix": "arrow:labeled",
+    "description": "Arrow with a text label.",
+    "body": "{{< arrow from=\"${1:50,50}\" to=\"${2:250,50}\" label=\"${3:Step 1}\" >}}"
+  }
+}

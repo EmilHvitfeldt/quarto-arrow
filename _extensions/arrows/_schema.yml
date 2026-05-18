@@ -1,0 +1,62 @@
+$schema: "https://raw.githubusercontent.com/mcanouil/quarto-wizard/main/schema/schema-1.0.json"
+
+shortcodes:
+  - name: arrow
+    description: Draw an arrow with Bézier curves between two points.
+    arguments:
+      - name: from
+        type: string
+        description: "Start coordinates as 'x,y' (e.g. '50,50')."
+        required: true
+      - name: to
+        type: string
+        description: "End coordinates as 'x,y' (e.g. '250,50')."
+        required: true
+      - name: curve
+        type: number
+        description: "Curve amount for the Bézier arc (e.g. 0.5)."
+      - name: bend
+        type: string
+        description: "Bend direction: 'left' or 'right'."
+        enum: [left, right]
+      - name: waypoints
+        type: string
+        description: "Comma-separated intermediate points for complex paths."
+      - name: head
+        type: string
+        description: "Arrowhead style."
+        enum: [arrow, stealth, diamond, circle, square, bar, barbed, none]
+      - name: color
+        type: string
+        description: "Arrow color (CSS color name or hex)."
+      - name: width
+        type: number
+        description: "Line width in pixels."
+      - name: opacity
+        type: number
+        description: "Opacity from 0 (transparent) to 1 (opaque)."
+      - name: dash
+        type: string
+        description: "Dash pattern (e.g. '5,5')."
+      - name: style
+        type: string
+        description: "Line style: 'single', 'dotted', 'double', or 'triple'."
+        enum: [single, dotted, double, triple]
+      - name: label
+        type: string
+        description: "Text label displayed along the arrow."
+      - name: label-pos
+        type: number
+        description: "Label position along the arrow (0–1, default 0.5)."
+      - name: fragment
+        type: boolean
+        description: "Animate as a RevealJS fragment (true/false)."
+      - name: aria-label
+        type: string
+        description: "Accessible label for screen readers."
+      - name: alt
+        type: string
+        description: "Alt text for the arrow graphic."
+      - name: title
+        type: string
+        description: "Tooltip title shown on hover."
